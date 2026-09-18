@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://sandeep0181.github.io/SandyTools/sitemap.xml
