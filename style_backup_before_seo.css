@@ -1,0 +1,24 @@
+﻿*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+.wrap{width:min(1000px,92%);margin:auto}
+header{background:#111827;color:white;padding:28px 0;text-align:center}
+header h1{margin:0;font-size:32px}
+header p{color:#cbd5e1;margin:8px 0 0}
+.hero{background:white;padding:28px;margin:24px 0;border-radius:16px;border:1px solid #dbe3ee;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,.05)}
+.hero h2{margin-top:0}
+.hero input{width:100%;max-width:650px;padding:14px;border:1px solid #b8c7dd;border-radius:10px;font-size:16px}
+h2{margin:30px 0 15px}
+.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tool-box{background:white;border:1px solid #dbe3ee;border-radius:16px;padding:20px;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:.2s}
+.tool-box:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.09)}
+.tool-box h3{margin:0 0 8px;font-size:18px}
+.tool-box p{margin:0 0 15px;color:#64748b;font-size:14px}
+button{background:#2563eb;color:white;border:0;padding:11px 18px;border-radius:9px;font-weight:bold;cursor:pointer;margin:4px 4px 4px 0}
+button:hover{background:#1d4ed8}
+.tool-panel{display:none;margin-top:15px;padding-top:15px;border-top:1px solid #e2e8f0}
+.tool-panel input,.tool-panel textarea,.tool-panel select{display:block;width:100%;padding:11px;margin:8px 0;border:1px solid #b8c7dd;border-radius:8px;font-size:15px;font-family:inherit}
+.result{display:block;min-height:50px;margin-top:12px;padding:12px;background:#f8fbff;border:2px solid #2563eb;border-radius:8px;font-size:15px;font-weight:bold;word-break:break-word}
+.hidden{display:none!important}
+footer{margin-top:45px;padding:25px;background:#111827;color:white;text-align:center}
+@media(max-width:800px){.tool-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:550px){.wrap{width:94%}.tool-grid{grid-template-columns:1fr}.hero{padding:22px}.tool-box{padding:17px}}
