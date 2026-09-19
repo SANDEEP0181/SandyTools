@@ -46,6 +46,12 @@
 <input id="searchTools" type="text" placeholder="Search any tool...">
 </section>
 
+<section class="hero">
+<h2>Simple Tools for Everyday Tasks</h2>
+<p>SandyTools brings calculators, text utilities, image tools, QR tools, PDF utilities and creator tools together in one easy-to-use website.</p>
+<p>Choose a tool, enter your information and get the result directly in your browser. For important financial or business decisions, verify calculator results independently.</p>
+</section>
+
 <div class="tool-grid">
 <div class="tool-box" data-name="percentage calculator"><h3>Percentage Calculator</h3><p>Calculate percentages quickly.</p><button onclick="openTool('percentage')">Open Tool</button><div id="percentage" class="tool-panel"><input id="percentValue" type="number" placeholder="Enter value"><input id="percentTotal" type="number" placeholder="Enter total"><button onclick="calculatePercentage()">Calculate</button><div id="percentResult" class="result"></div></div></div>
 <div class="tool-box" data-name="age calculator"><h3>Age Calculator</h3><p>Calculate your exact age.</p><button onclick="openTool('age')">Open Tool</button><div id="age" class="tool-panel"><input id="birthDate" type="date"><button onclick="calculateAge()">Calculate Age</button><div id="ageResult" class="result"></div></div></div>
@@ -63,7 +69,7 @@
 <div class="tool-box" data-name="character counter"><h3>Character Counter</h3><p>Count characters in text.</p><button onclick="openTool('characters')">Open Tool</button><div id="characters" class="tool-panel"><textarea id="characterText" rows="5" placeholder="Type or paste text"></textarea><button onclick="countCharacters()">Count Characters</button><div id="characterResult" class="result"></div></div></div>
 <div class="tool-box" data-name="case converter"><h3>Case Converter</h3><p>Convert text uppercase or lowercase.</p><button onclick="openTool('case')">Open Tool</button><div id="case" class="tool-panel"><textarea id="caseText" rows="5" placeholder="Enter text"></textarea><button onclick="toUpperCaseText()">UPPERCASE</button><button onclick="toLowerCaseText()">lowercase</button><div id="caseResult" class="result"></div></div></div>
 </div>
-<h2>Free Online Tools & Calculators</h2>
+
 <div class="tool-grid">
 <div class="tool-box" data-name="date difference"><h3>Date Difference</h3><p>Find difference between dates.</p><button onclick="openTool('date')">Open Tool</button><div id="date" class="tool-panel"><input id="dateOne" type="date"><input id="dateTwo" type="date"><button onclick="dateDifference()">Calculate Difference</button><div id="dateResult" class="result"></div></div></div>
 <div class="tool-box" data-name="time calculator"><h3>Time Calculator</h3><p>Calculate time difference.</p><button onclick="openTool('time')">Open Tool</button><div id="time" class="tool-panel"><input id="timeOne" type="time"><input id="timeTwo" type="time"><button onclick="calculateTime()">Calculate Difference</button><div id="timeResult" class="result"></div></div></div>
