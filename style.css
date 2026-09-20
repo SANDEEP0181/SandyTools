@@ -1,42 +1,38 @@
-﻿*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
-.wrap{width:min(1000px,92%);margin:auto}
-header{background:#111827;color:white;padding:28px 0;text-align:center;position:sticky;top:0;z-index:20}
-header h1{margin:0;font-size:32px}
-header p{color:#cbd5e1;margin:8px 0 0}
-.hero{background:white;padding:28px;margin:24px 0;border-radius:16px;border:1px solid #dbe3ee;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,.05)}
-.hero h2{margin-top:0}
-.hero input{width:100%;max-width:650px;padding:14px;border:1px solid #b8c7dd;border-radius:10px;font-size:16px}
-h2{margin:30px 0 15px}
-.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.tool-box{background:white;border:1px solid #dbe3ee;border-radius:16px;padding:20px;box-shadow:0 4px 14px rgba(0,0,0,.05);transition:.2s}
-.tool-box:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.09)}
-.tool-box h3{margin:0 0 8px;font-size:18px}
-.tool-box p{margin:0 0 15px;color:#64748b;font-size:14px}
-button{background:#2563eb;color:white;border:0;padding:11px 18px;border-radius:9px;font-weight:bold;cursor:pointer;margin:4px 4px 4px 0}
-button:hover{background:#1d4ed8}
-.tool-panel{display:none;margin-top:15px;padding-top:15px;border-top:1px solid #e2e8f0}
-.tool-panel input,.tool-panel textarea,.tool-panel select{display:block;width:100%;padding:11px;margin:8px 0;border:1px solid #b8c7dd;border-radius:8px;font-size:15px;font-family:inherit}
-.result{display:block;min-height:50px;margin-top:12px;padding:12px;background:#f8fbff;border:2px solid #2563eb;border-radius:8px;font-size:15px;font-weight:bold;word-break:break-word}
+:root{
+  --bg:#f5f7fb;--surface:#fff;--surface-soft:#f8fafc;--text:#0f172a;--muted:#64748b;
+  --brand:#2563eb;--brand-dark:#1d4ed8;--border:#e2e8f0;--shadow:0 10px 30px rgba(15,23,42,.07)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+.wrap{width:min(1120px,92%);margin:auto}
+header{background:rgba(15,23,42,.96);color:#fff;padding:22px 0;position:sticky;top:0;z-index:20;box-shadow:0 6px 24px rgba(15,23,42,.12)}
+header h1{margin:0;font-size:30px;letter-spacing:-.6px}
+header p{color:#cbd5e1;margin:5px 0 0}
+.site-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-top:15px}
+.site-nav a{color:#e2e8f0;text-decoration:none;padding:7px 11px;border-radius:9px;font-size:14px}
+.site-nav a:hover,.site-nav a:focus-visible{background:#1e293b;color:#fff}
+.hero{background:linear-gradient(135deg,#fff,#eff6ff);padding:38px 28px;margin:28px 0;border:1px solid var(--border);border-radius:22px;text-align:center;box-shadow:var(--shadow)}
+.hero h2{margin:0 0 8px;font-size:30px;letter-spacing:-.5px}
+.hero p{max-width:720px;margin:0 auto 20px;color:var(--muted)}
+.hero input{width:min(680px,100%);padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;background:#fff;outline:none}
+.hero input:focus{border-color:#60a5fa;box-shadow:0 0 0 4px rgba(37,99,235,.12)}
+h2{margin:32px 0 16px;letter-spacing:-.3px}
+.tool-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.tool-box{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.tool-box:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(15,23,42,.1);border-color:#cbd5e1}
+.tool-box h3{margin:0 0 7px;font-size:18px;line-height:1.35}
+.tool-box p{margin:0 0 15px;color:var(--muted);font-size:14px}
+button{background:var(--brand);color:#fff;border:0;padding:11px 17px;border-radius:10px;font-weight:750;cursor:pointer;margin:4px 4px 4px 0;min-height:42px;transition:background .2s,transform .2s,box-shadow .2s}
+button:hover{background:var(--brand-dark);transform:translateY(-1px);box-shadow:0 7px 16px rgba(37,99,235,.22)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.tool-panel{display:none;margin-top:15px;padding-top:15px;border-top:1px solid var(--border)}
+.tool-panel input,.tool-panel textarea,.tool-panel select{display:block;width:100%;padding:11px 12px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px;font:inherit;background:#fff}
+.result{display:block;min-height:50px;margin-top:12px;padding:13px;background:var(--surface-soft);border:1px solid #bfdbfe;border-radius:10px;font-size:15px;font-weight:650;word-break:break-word}
+.result a{color:var(--brand-dark);font-weight:750}
 .hidden{display:none!important}
-footer{margin-top:45px;padding:25px;background:#111827;color:white;text-align:center}
-@media(max-width:800px){.tool-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:550px){.wrap{width:94%}.tool-grid{grid-template-columns:1fr}.hero{padding:22px}.tool-box{padding:17px}}
-
-footer a{
-color:white;
-text-decoration:none;
-margin:0 5px;
-}
-
-footer a:hover{
-text-decoration:underline;
-}
-
-.site-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:18px}
-.site-nav a{color:#e2e8f0;text-decoration:none;padding:7px 11px;border-radius:8px}
-.site-nav a:hover,.site-nav a:focus{background:#1f2937;text-decoration:underline}
-button:focus-visible,.site-nav a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
-.tool-box h3{line-height:1.35}
-.result a{color:#1d4ed8;font-weight:bold}
-@media(max-width:550px){header{position:static}.site-nav{gap:4px}.site-nav a{padding:6px 8px;font-size:14px}}
+footer{margin-top:55px;padding:28px 0;background:#0f172a;color:#cbd5e1;text-align:center}
+footer a{color:#fff;text-decoration:none;margin:0 5px}
+footer a:hover{text-decoration:underline}
+@media(max-width:900px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.wrap{width:94%}header{position:static;padding:19px 0}.site-nav{justify-content:flex-start}.site-nav a{font-size:13px;padding:6px 9px}.hero{padding:28px 18px;border-radius:18px}.hero h2{font-size:25px}.tool-grid{grid-template-columns:1fr}.tool-box{padding:18px}}
