@@ -1,0 +1,22 @@
+name: SandyTools Site Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify core site files
+        shell: bash
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f script.js
+          test -f robots.txt
+          test -f sitemap.xml
+          grep -q "<title>" index.html
