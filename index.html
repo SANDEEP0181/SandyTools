@@ -38,12 +38,24 @@
 <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
 <body>
-<header><div class="wrap"><h1>SandyTools</h1><p>Free Online Tools</p></div></header>
+<header>
+<div class="wrap">
+<h1>SandyTools</h1>
+<p>Free Online Tools</p>
+<nav class="site-nav" aria-label="Main navigation">
+<a href="./">Home</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+<a href="privacy.html">Privacy</a>
+<a href="terms.html">Terms</a>
+</nav>
+</div>
+</header>
 <main class="wrap">
 <section class="hero">
 <h2>Free Online Tools & Calculators</h2>
 <p>Fast, simple and free tools for everyone.</p>
-<input id="searchTools" type="text" placeholder="Search any tool...">
+<input id="searchTools" type="search" aria-label="Search tools" autocomplete="off" placeholder="Search any tool...">
 </section>
 
 <section class="hero">
