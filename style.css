@@ -1,7 +1,7 @@
 ﻿*{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
 .wrap{width:min(1000px,92%);margin:auto}
-header{background:#111827;color:white;padding:28px 0;text-align:center}
+header{background:#111827;color:white;padding:28px 0;text-align:center;position:sticky;top:0;z-index:20}
 header h1{margin:0;font-size:32px}
 header p{color:#cbd5e1;margin:8px 0 0}
 .hero{background:white;padding:28px;margin:24px 0;border-radius:16px;border:1px solid #dbe3ee;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,.05)}
@@ -32,3 +32,11 @@ margin:0 5px;
 footer a:hover{
 text-decoration:underline;
 }
+
+.site-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:18px}
+.site-nav a{color:#e2e8f0;text-decoration:none;padding:7px 11px;border-radius:8px}
+.site-nav a:hover,.site-nav a:focus{background:#1f2937;text-decoration:underline}
+button:focus-visible,.site-nav a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.tool-box h3{line-height:1.35}
+.result a{color:#1d4ed8;font-weight:bold}
+@media(max-width:550px){header{position:static}.site-nav{gap:4px}.site-nav a{padding:6px 8px;font-size:14px}}
