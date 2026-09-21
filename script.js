@@ -1,4 +1,4 @@
-﻿function openTool(id){
+function openTool(id){
 const panel=document.getElementById(id);
 if(!panel)return;
 document.querySelectorAll(".tool-panel").forEach(function(p){if(p!==panel)p.style.display="none";});
@@ -140,3 +140,99 @@ result.innerText="Could not merge PDF files. Please check the selected files.";
 }
 
 }
+
+
+/* SandyTools — New popular tools */
+function downloadBlob(blob,name){
+let url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+setTimeout(function(){URL.revokeObjectURL(url)},1000);
+}
+async function jpgToPDF(){
+let file=document.getElementById("jpgPdfFile")?.files[0],result=document.getElementById("jpgPdfResult");
+if(!file){result.innerText="Select an image first.";return;}
+if(typeof PDFLib==="undefined"){result.innerText="PDF library is loading. Refresh and try again.";return;}
+try{
+let bytes=await file.arrayBuffer(),pdf=await PDFLib.PDFDocument.create(),img;
+if(file.type==="image/png") img=await pdf.embedPng(bytes); else img=await pdf.embedJpg(bytes);
+let scale=Math.min(1,595/img.width),w=img.width*scale,h=img.height*scale;
+let page=pdf.addPage([w,h]);page.drawImage(img,{x:0,y:0,width:w,height:h});
+let out=await pdf.save();downloadBlob(new Blob([out],{type:"application/pdf"}),"SandyTools-Image.pdf");
+result.innerText="PDF created successfully.";
+}catch(e){result.innerText="Could not create PDF. Please use JPG or PNG.";}
+}
+async function loadPdfJs(){
+if(window.pdfjsLib)return window.pdfjsLib;
+return await new Promise(function(resolve,reject){
+let s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";s.type="module";
+s.onload=function(){setTimeout(function(){if(window.pdfjsLib)resolve(window.pdfjsLib);else reject(new Error("PDF.js unavailable"));},500)};
+s.onerror=reject;document.head.appendChild(s);
+});
+}
+async function pdfToJPG(){
+let file=document.getElementById("pdfJpgFile")?.files[0],result=document.getElementById("pdfJpgResult");
+if(!file){result.innerText="Select a PDF first.";return;}
+result.innerText="Preparing PDF preview...";
+try{
+let lib=await loadPdfJs();if(!lib||!lib.getDocument)throw new Error("load");
+let data=await file.arrayBuffer(),pdf=await lib.getDocument({data}).promise,page=await pdf.getPage(1);
+let viewport=page.getViewport({scale:1.5}),canvas=document.createElement("canvas");canvas.width=viewport.width;canvas.height=viewport.height;
+await page.render({canvasContext:canvas.getContext("2d"),viewport}).promise;
+canvas.toBlob(function(blob){downloadBlob(blob,"SandyTools-PDF-Page-1.jpg");result.innerText="First PDF page converted to JPG.";}, "image/jpeg", .92);
+}catch(e){result.innerText="PDF to JPG could not load in this browser. Try again or use a modern browser.";}
+}
+async function compressPDF(){
+let file=document.getElementById("compressPdfFile")?.files[0],result=document.getElementById("compressPdfResult");
+if(!file){result.innerText="Select a PDF first.";return;}
+if(typeof PDFLib==="undefined"){result.innerText="PDF library is loading. Refresh and try again.";return;}
+try{
+let pdf=await PDFLib.PDFDocument.load(await file.arrayBuffer()),out=await pdf.save({useObjectStreams:true,addDefaultPage:false});
+let oldSize=(file.size/1024).toFixed(1),newSize=(out.length/1024).toFixed(1);
+downloadBlob(new Blob([out],{type:"application/pdf"}),"SandyTools-Compressed.pdf");
+result.innerText="Processed: "+oldSize+" KB → "+newSize+" KB. PDF structure was optimized; image-heavy PDFs may not shrink much.";
+}catch(e){result.innerText="Could not process this PDF.";}
+}
+async function splitPDF(){
+let file=document.getElementById("splitPdfFile")?.files[0],result=document.getElementById("splitPdfResult");
+if(!file){result.innerText="Select a PDF first.";return;}
+let pageNo=Math.max(1,Number(document.getElementById("splitPage")?.value)||1);
+if(typeof PDFLib==="undefined"){result.innerText="PDF library is loading. Refresh and try again.";return;}
+try{
+let src=await PDFLib.PDFDocument.load(await file.arrayBuffer());
+if(pageNo>src.getPageCount()){result.innerText="Page number is greater than the PDF page count.";return;}
+let out=await PDFLib.PDFDocument.create(),[page]=await out.copyPages(src,[pageNo-1]);out.addPage(page);
+let bytes=await out.save();downloadBlob(new Blob([bytes],{type:"application/pdf"}),"SandyTools-Page-"+pageNo+".pdf");
+result.innerText="Page "+pageNo+" extracted successfully.";
+}catch(e){result.innerText="Could not split this PDF.";}
+}
+function makePassportPhoto(){
+let file=document.getElementById("passportFile")?.files[0],result=document.getElementById("passportResult");
+if(!file){result.innerText="Select a photo first.";return;}
+let img=new Image(),reader=new FileReader();
+reader.onload=function(e){img.onload=function(){
+let canvas=document.createElement("canvas"),ctx=canvas.getContext("2d");
+canvas.width=413;canvas.height=531;
+let ratio=Math.max(canvas.width/img.width,canvas.height/img.height),w=img.width*ratio,h=img.height*ratio;
+ctx.drawImage(img,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
+canvas.toBlob(function(blob){downloadBlob(blob,"SandyTools-Passport-Photo.jpg");result.innerText="Passport-size photo created (413 × 531 px).";},"image/jpeg",.92);
+};img.src=e.target.result;};reader.readAsDataURL(file);
+}
+function formatJSON(){
+let input=document.getElementById("jsonInput")?.value.trim(),result=document.getElementById("jsonResult");
+if(!input){result.innerText="Paste JSON first.";return;}
+try{result.textContent=JSON.stringify(JSON.parse(input),null,2);}catch(e){result.innerText="Invalid JSON: "+e.message;}
+}
+function addNewToolsSection(){
+if(!document.body||document.getElementById("new-popular-tools")||!document.querySelector('link[href="style.css"]'))return;
+let main=document.querySelector("main");if(!main)return;
+let sec=document.createElement("section");sec.className="tool-section";sec.id="new-popular-tools";
+sec.innerHTML='<div class="section-heading"><div><span class="section-kicker">06</span><h2>Popular New Tools</h2></div><p>More useful tools for everyday tasks.</p></div><div class="tool-grid">'+
+'<div class="tool-box" data-name="jpg to pdf image to pdf"><div class="tool-icon">PDF</div><div class="tool-info"><h3>JPG → PDF</h3><p>Convert a JPG or PNG image into a PDF.</p><button onclick="openTool(\'jpgToPDF\')">Open</button></div><div id="jpgToPDF" class="tool-panel"><input type="file" id="jpgPdfFile" accept="image/jpeg,image/png"><button onclick="jpgToPDF()">Convert to PDF</button><div id="jpgPdfResult" class="result">Select an image first.</div></div></div>'+
+'<div class="tool-box" data-name="pdf to jpg"><div class="tool-icon">IMG</div><div class="tool-info"><h3>PDF → JPG</h3><p>Convert the first PDF page to JPG.</p><button onclick="openTool(\'pdfToJPG\')">Open</button></div><div id="pdfToJPG" class="tool-panel"><input type="file" id="pdfJpgFile" accept=".pdf,application/pdf"><button onclick="pdfToJPG()">Convert to JPG</button><div id="pdfJpgResult" class="result">Select a PDF first.</div></div></div>'+
+'<div class="tool-box" data-name="pdf compressor"><div class="tool-icon">PDF</div><div class="tool-info"><h3>PDF Compressor</h3><p>Optimize PDF structure and reduce size when possible.</p><button onclick="openTool(\'pdfCompressor\')">Open</button></div><div id="pdfCompressor" class="tool-panel"><input type="file" id="compressPdfFile" accept=".pdf,application/pdf"><button onclick="compressPDF()">Compress PDF</button><div id="compressPdfResult" class="result">Select a PDF first.</div></div></div>'+
+'<div class="tool-box" data-name="passport photo maker india"><div class="tool-icon">ID</div><div class="tool-info"><h3>Passport Photo Maker</h3><p>Create a standard 413 × 531 px photo.</p><button onclick="openTool(\'passportPhoto\')">Open</button></div><div id="passportPhoto" class="tool-panel"><input type="file" id="passportFile" accept="image/*"><button onclick="makePassportPhoto()">Create Photo</button><div id="passportResult" class="result">Select a photo first.</div></div></div>'+
+'<div class="tool-box" data-name="split pdf pdf splitter"><div class="tool-icon">PDF</div><div class="tool-info"><h3>Split PDF</h3><p>Extract one page from a PDF.</p><button onclick="openTool(\'splitPdf\')">Open</button></div><div id="splitPdf" class="tool-panel"><input type="file" id="splitPdfFile" accept=".pdf,application/pdf"><input type="number" id="splitPage" min="1" value="1" placeholder="Page number"><button onclick="splitPDF()">Extract Page</button><div id="splitPdfResult" class="result">Select a PDF first.</div></div></div>'+
+'<div class="tool-box" data-name="json formatter validator developer"><div class="tool-icon">{ }</div><div class="tool-info"><h3>JSON Formatter</h3><p>Format and validate JSON instantly.</p><button onclick="openTool(\'jsonFormatter\')">Open</button></div><div id="jsonFormatter" class="tool-panel"><textarea id="jsonInput" rows="6" placeholder="{&quot;name&quot;:&quot;SandyTools&quot;}"></textarea><button onclick="formatJSON()">Format JSON</button><div id="jsonResult" class="result">Paste JSON first.</div></div></div>'+
+'</div>';main.appendChild(sec);
+}
+document.addEventListener("DOMContentLoaded",addNewToolsSection);
