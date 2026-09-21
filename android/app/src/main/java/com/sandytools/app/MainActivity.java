@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.view.View;
 import android.widget.ProgressBar;
+import androidx.core.splashscreen.SplashScreen;
 
 public class MainActivity extends Activity {
     private static final String HOME_URL = "https://sandeep0181.github.io/SandyTools/";
@@ -25,6 +26,7 @@ public class MainActivity extends Activity {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
         setContentView(com.sandytools.app.R.layout.activity_main);
 
