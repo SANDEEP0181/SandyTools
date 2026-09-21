@@ -236,3 +236,111 @@ sec.innerHTML='<div class="section-heading"><div><span class="section-kicker">06
 '</div>';main.appendChild(sec);
 }
 document.addEventListener("DOMContentLoaded",addNewToolsSection);
+
+
+/* SandyTools — Image & Video editing tools */
+async function removeImageBackground(){
+let file=document.getElementById("bgRemoveFile")?.files[0],result=document.getElementById("bgRemoveResult");
+if(!file){result.innerText="Select an image first.";return;}
+result.innerText="Loading background-removal model… first run can take longer.";
+try{
+let mod=await import("https://cdn.jsdelivr.net/npm/@imgly/background-removal/+esm");
+let blob=await mod.removeBackground(file,{model:"isnet_quint8",output:{format:"image/png",quality:0.9}});
+downloadBlob(blob,"SandyTools-Background-Removed.png");
+result.innerText="Background removed successfully. PNG download started.";
+}catch(e){
+result.innerText="Background removal could not start. Try a modern browser and allow the model to load.";
+}
+}
+function getVideoDuration(file,video){
+return new Promise(function(resolve,reject){
+video.preload="metadata";
+video.onloadedmetadata=function(){URL.revokeObjectURL(video.src);resolve(video.duration);};
+video.onerror=function(){URL.revokeObjectURL(video.src);reject(new Error("video"));};
+video.src=URL.createObjectURL(file);
+});
+}
+async function recordVideoBrowser(file,start,end,maxWidth){
+let video=document.createElement("video");
+video.muted=false;video.playsInline=true;video.preload="auto";
+let duration=await getVideoDuration(file,video);
+if(!isFinite(duration)||duration<=0)throw new Error("duration");
+start=Math.max(0,Math.min(start,duration));
+end=Math.max(start+0.1,Math.min(end,duration));
+let waitSeek=function(){
+return new Promise(function(resolve,reject){
+video.onseeked=function(){resolve();};
+video.onerror=reject;
+video.currentTime=start;
+});
+};
+await waitSeek();
+let scale=Math.min(1,maxWidth/video.videoWidth);
+let w=Math.max(2,Math.round(video.videoWidth*scale)),h=Math.max(2,Math.round(video.videoHeight*scale));
+let canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;
+let ctx=canvas.getContext("2d");
+let canvasStream=canvas.captureStream(30);
+let sourceStream=video.captureStream?video.captureStream():null;
+if(sourceStream)sourceStream.getAudioTracks().forEach(function(t){canvasStream.addTrack(t);});
+let mime="video/webm;codecs=vp8,opus";
+if(!MediaRecorder.isTypeSupported(mime))mime="video/webm";
+let chunks=[],rec=new MediaRecorder(canvasStream,{mimeType:mime,videoBitsPerSecond:1600000});
+let finished=new Promise(function(resolve,reject){
+rec.ondataavailable=function(e){if(e.data.size)chunks.push(e.data);};
+rec.onerror=function(){reject(rec.error||new Error("recording"));};
+rec.onstop=function(){resolve(new Blob(chunks,{type:mime}));};
+});
+let draw=function(){
+if(video.currentTime>=end||video.ended){if(rec.state!=="inactive")rec.stop();return;}
+ctx.drawImage(video,0,0,w,h);requestAnimationFrame(draw);
+};
+rec.start(250);await video.play();draw();
+return await finished;
+}
+async function compressVideoBrowser(){
+let file=document.getElementById("compressVideoFile")?.files[0],result=document.getElementById("compressVideoResult");
+if(!file){result.innerText="Select a video first.";return;}
+if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){result.innerText="Video compression is not supported in this browser.";return;}
+result.innerText="Compressing video in your browser… keep this page open.";
+try{
+let video=document.createElement("video"),duration=await getVideoDuration(file,video);
+let blob=await recordVideoBrowser(file,0,duration,1280);
+downloadBlob(blob,"SandyTools-Compressed-Video.webm");
+result.innerText="Video compressed successfully. Output: WebM ("+(blob.size/1024/1024).toFixed(2)+" MB).";
+}catch(e){result.innerText="Could not compress this video. Try a shorter/smaller video.";}}
+async function trimVideoBrowser(){
+let file=document.getElementById("trimVideoFile")?.files[0],result=document.getElementById("trimVideoResult");
+let start=Math.max(0,Number(document.getElementById("trimStart")?.value)||0),end=Number(document.getElementById("trimEnd")?.value);
+if(!file){result.innerText="Select a video first.";return;}
+if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){result.innerText="Video trimming is not supported in this browser.";return;}
+result.innerText="Trimming video in your browser… keep this page open.";
+try{
+let video=document.createElement("video"),duration=await getVideoDuration(file,video);
+if(!isFinite(end)||end<=start)end=duration;
+if(start>=duration||end<=start){result.innerText="Enter a valid start/end time.";return;}
+let blob=await recordVideoBrowser(file,start,end,1920);
+downloadBlob(blob,"SandyTools-Trimmed-Video.webm");
+result.innerText="Video trimmed successfully. Output: WebM ("+(blob.size/1024/1024).toFixed(2)+" MB).";
+}catch(e){result.innerText="Could not trim this video. Try a shorter/smaller video.";}}
+function addMediaToolsSection(){
+if(!document.body||document.getElementById("media-editing-tools"))return;
+let main=document.querySelector("main");if(!main)return;
+let sec=document.createElement("section");sec.className="tool-section";sec.id="media-editing-tools";
+sec.innerHTML='<div class="section-heading"><div><span class="section-kicker">07</span><h2>Image & Video Editing</h2></div><p>Popular browser-based editing tools.</p></div><div class="tool-grid">'+
+'<div class="tool-box" data-name="background remover remove background image editing ai"><div class="tool-icon">BG</div><div class="tool-info"><h3>Background Remover</h3><p>AI background removal directly in your browser.</p><button onclick="openTool(\'bgRemover\')">Open</button></div><div id="bgRemover" class="tool-panel"><input type="file" id="bgRemoveFile" accept="image/*"><button onclick="removeImageBackground()">Remove Background</button><div id="bgRemoveResult" class="result">Select an image first.</div></div></div>'+
+'<div class="tool-box" data-name="image converter jpg png webp convert image editing"><div class="tool-icon">IMG</div><div class="tool-info"><h3>Image Converter</h3><p>Convert images to JPG, PNG or WebP.</p><button onclick="openTool(\'imageConverter\')">Open</button></div><div id="imageConverter" class="tool-panel"><input type="file" id="convertImageFile" accept="image/*"><select id="convertImageType"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select><button onclick="convertImageFile()">Convert Image</button><div id="convertImageResult" class="result">Select an image first.</div></div></div>'+
+'<div class="tool-box" data-name="video compressor compress video editing"><div class="tool-icon">VID</div><div class="tool-info"><h3>Video Compressor</h3><p>Reduce video resolution and bitrate in your browser.</p><button onclick="openTool(\'videoCompressor\')">Open</button></div><div id="videoCompressor" class="tool-panel"><input type="file" id="compressVideoFile" accept="video/*"><button onclick="compressVideoBrowser()">Compress Video</button><div id="compressVideoResult" class="result">Select a video first.</div></div></div>'+
+'<div class="tool-box" data-name="video trimmer trim video editing"><div class="tool-icon">CUT</div><div class="tool-info"><h3>Video Trimmer</h3><p>Cut the start and end of a video quickly.</p><button onclick="openTool(\'videoTrimmer\')">Open</button></div><div id="videoTrimmer" class="tool-panel"><input type="file" id="trimVideoFile" accept="video/*"><input type="number" id="trimStart" min="0" step="0.1" placeholder="Start seconds"><input type="number" id="trimEnd" min="0" step="0.1" placeholder="End seconds"><button onclick="trimVideoBrowser()">Trim Video</button><div id="trimVideoResult" class="result">Select a video first.</div></div></div>'+
+'</div>';main.appendChild(sec);
+}
+function convertImageFile(){
+let file=document.getElementById("convertImageFile")?.files[0],type=document.getElementById("convertImageType")?.value,result=document.getElementById("convertImageResult");
+if(!file){result.innerText="Select an image first.";return;}
+let img=new Image(),reader=new FileReader();
+reader.onload=function(e){img.onload=function(){
+let canvas=document.createElement("canvas");canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+canvas.getContext("2d").drawImage(img,0,0);
+canvas.toBlob(function(blob){if(!blob){result.innerText="Conversion failed.";return;}let ext=type==="image/png"?"png":type==="image/webp"?"webp":"jpg";downloadBlob(blob,"SandyTools-Converted."+ext);result.innerText="Image converted to "+ext.toUpperCase()+" successfully.";},type,0.92);
+};img.src=e.target.result;};reader.readAsDataURL(file);
+}
+document.addEventListener("DOMContentLoaded",addMediaToolsSection);
