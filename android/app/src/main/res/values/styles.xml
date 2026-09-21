@@ -2,9 +2,10 @@
 <resources>
     <style name="Theme.SandyTools" parent="android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>
-        <item name="android:colorAccent">#2563EB</item>
-        <item name="android:navigationBarColor">#FFFFFF</item>
-        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:colorAccent">@color/sandytools_blue</item>
+        <item name="android:navigationBarColor">@color/sandytools_white</item>
+        <item name="android:statusBarColor">@color/sandytools_white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 </resources>
