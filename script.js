@@ -220,8 +220,14 @@ let input=document.getElementById("jsonInput")?.value.trim(),result=document.get
 if(!input){result.innerText="Paste JSON first.";return;}
 try{
 let parsed=JSON.parse(input),pretty=JSON.stringify(parsed,null,2);
-result.innerHTML="<pre style='white-space:pre-wrap;word-break:break-word;margin:0'>"+escapeHtml(pretty)+"</pre><br><button type='button' onclick='copyToolText("+JSON.stringify(pretty)+")'>Copy</button> <button type='button' onclick='downloadBlob(new Blob(["+JSON.stringify(pretty)+"],{type:"+"application/json"+"}),"+"SandyTools-formatted.json"+")'>Download JSON</button>";
+window.sandyFormattedJSON=pretty;
+result.innerHTML="<pre style='white-space:pre-wrap;word-break:break-word;margin:0'>"+escapeHtml(pretty)+"</pre><br><button type='button' onclick='copyToolText("+JSON.stringify(pretty)+")'>Copy</button> <button type='button' onclick='downloadFormattedJSON()'>Download JSON</button>";
 }catch(e){result.innerText="Invalid JSON: "+e.message;}
+}
+function downloadFormattedJSON(){
+let text=window.sandyFormattedJSON||"";
+if(!text)return;
+downloadBlob(new Blob([text],{type:"application/json"}),"SandyTools-formatted.json");
 }
 function escapeHtml(s){return String(s).replace(/[&<>"]/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[ch]||ch;});}
 function copyToolText(text){
