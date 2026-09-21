@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Image Tools - Compressor & Resizer | SandyTools</title>
+<meta name="description" content="Use free browser-based image tools from SandyTools to compress and resize JPG, PNG and WebP images.">
+<meta name="robots" content="index, follow"><link rel="canonical" href="https://sandeep0181.github.io/SandyTools/image-tools.html">
+<meta property="og:title" content="Free Image Tools - SandyTools"><meta property="og:description" content="Compress and resize images directly in your browser."><meta property="og:type" content="website"><meta property="og:url" content="https://sandeep0181.github.io/SandyTools/image-tools.html">
+<link rel="stylesheet" href="style.css">
+</head><body><header><div class="wrap"><h1>SandyTools</h1><p>Free Image Tools</p><nav class="site-nav"><a href="./">Home</a><a href="calculator.html">Calculators</a><a href="qr-generator.html">QR Generator</a><a href="image-tools.html">Image Tools</a><a href="pdf-tools.html">PDF Tools</a><a href="youtube-tools.html">YouTube Tools</a></nav></div></header>
+<main class="wrap"><section class="hero"><h2>Free Image Tools</h2><p>Compress or resize images in your browser without installing separate software.</p></section>
+<div class="tool-grid"><div class="tool-box"><h3>Image Compressor</h3><p>Compress JPG, PNG and WebP images.</p><input type="file" id="compressImage" accept="image/*"><label>Quality: <span id="qualityValue">70</span>%</label><input type="range" id="compressQuality" min="10" max="100" value="70" oninput="document.getElementById('qualityValue').innerText=this.value"><button onclick="compressImageFile()">Compress Image</button><div id="compressResult" class="result">Select an image first.</div></div>
+<div class="tool-box"><h3>Image Resizer</h3><p>Resize an image to a chosen width and height.</p><input type="file" id="resizeImage" accept="image/*"><input type="number" id="resizeWidth" placeholder="Width in pixels"><input type="number" id="resizeHeight" placeholder="Height in pixels"><button onclick="resizeImageFile()">Resize Image</button><div id="resizeResult" class="result">Select an image first.</div></div></div>
+<section class="hero"><h2>Browser-Based Image Processing</h2><p>These tools are designed to process selected images in the browser. Review the result before using it for important work.</p></section></main>
+<footer><div class="wrap"><p>© 2026 SandyTools</p><p><a href="about.html">About</a> | <a href="contact.html">Contact</a> | <a href="privacy.html">Privacy</a> | <a href="terms.html">Terms</a></p></div></footer>
+<script src="script.js"></script></body></html>
