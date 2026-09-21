@@ -229,22 +229,8 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 else fallbackCopy(text);
 }
 function fallbackCopy(text){let t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();alert("Copied to clipboard.");}
-function addNewToolsSection(){
-if(!document.body||document.getElementById("new-popular-tools")||!document.querySelector('link[href="style.css"]'))return;
-let main=document.querySelector("main");if(!main)return;
-let sec=document.createElement("section");sec.className="tool-section";sec.id="new-popular-tools";
-sec.innerHTML='<div class="section-heading"><div><span class="section-kicker">06</span><h2>Popular New Tools</h2></div><p>10 practical tools, built to work directly in your browser.</p></div><div class="tool-grid">'+
-'<div class="tool-box" data-name="jpg to pdf image to pdf"><div class="tool-icon">PDF</div><div class="tool-info"><h3>JPG → PDF</h3><p>Convert a JPG or PNG image into a PDF.</p><button onclick="openTool(\'jpgToPDF\')">Open</button></div><div id="jpgToPDF" class="tool-panel"><input type="file" id="jpgPdfFile" accept="image/jpeg,image/png"><button onclick="jpgToPDF()">Convert to PDF</button><div id="jpgPdfResult" class="result">Select an image first.</div></div></div>'+
-'<div class="tool-box" data-name="pdf to jpg"><div class="tool-icon">IMG</div><div class="tool-info"><h3>PDF → JPG</h3><p>Convert any selected PDF page to JPG.</p><button onclick="openTool(\'pdfToJPG\')">Open</button></div><div id="pdfToJPG" class="tool-panel"><input type="file" id="pdfJpgFile" accept=".pdf,application/pdf"><input type="number" id="pdfJpgPage" min="1" value="1" placeholder="Page number"><button onclick="pdfToJPG()">Convert to JPG</button><div id="pdfJpgResult" class="result">Select a PDF first.</div></div></div>'+
-'<div class="tool-box" data-name="pdf compressor"><div class="tool-icon">PDF</div><div class="tool-info"><h3>PDF Compressor</h3><p>Optimize PDF structure and reduce size when possible.</p><button onclick="openTool(\'pdfCompressor\')">Open</button></div><div id="pdfCompressor" class="tool-panel"><input type="file" id="compressPdfFile" accept=".pdf,application/pdf"><button onclick="compressPDF()">Compress PDF</button><div id="compressPdfResult" class="result">Select a PDF first.</div></div></div>'+
-'<div class="tool-box" data-name="passport photo maker india"><div class="tool-icon">ID</div><div class="tool-info"><h3>Passport Photo Maker</h3><p>Create a standard 413 × 531 px photo.</p><button onclick="openTool(\'passportPhoto\')">Open</button></div><div id="passportPhoto" class="tool-panel"><input type="file" id="passportFile" accept="image/*"><button onclick="makePassportPhoto()">Create Photo</button><div id="passportResult" class="result">Select a photo first.</div></div></div>'+
-'<div class="tool-box" data-name="split pdf pdf splitter"><div class="tool-icon">PDF</div><div class="tool-info"><h3>Split PDF</h3><p>Extract a page or a range of pages.</p><button onclick="openTool(\'splitPdf\')">Open</button></div><div id="splitPdf" class="tool-panel"><input type="file" id="splitPdfFile" accept=".pdf,application/pdf"><input type="number" id="splitStart" min="1" value="1" placeholder="Start page"><input type="number" id="splitEnd" min="1" value="1" placeholder="End page"><button onclick="splitPDF()">Extract Pages</button><div id="splitPdfResult" class="result">Select a PDF first.</div></div></div>'+
-'<div class="tool-box" data-name="json formatter validator developer"><div class="tool-icon">{ }</div><div class="tool-info"><h3>JSON Formatter</h3><p>Format and validate JSON instantly.</p><button onclick="openTool(\'jsonFormatter\')">Open</button></div><div id="jsonFormatter" class="tool-panel"><textarea id="jsonInput" rows="6" placeholder="{&quot;name&quot;:&quot;SandyTools&quot;}"></textarea><button onclick="formatJSON()">Format JSON</button><div id="jsonResult" class="result">Paste JSON first.</div></div></div>'+
-'</div>';const anchor=document.getElementById("compact-info")||document.querySelector(".compact-info");
-if(anchor) main.insertBefore(sec,anchor); else main.appendChild(sec);
-}
+function addNewToolsSection(){}
 document.addEventListener("DOMContentLoaded",addNewToolsSection);
-
 
 /* SandyTools — Image & Video editing tools */
 async function removeImageBackground(){
