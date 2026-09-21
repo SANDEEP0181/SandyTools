@@ -43,7 +43,7 @@ canvas.toBlob(function(blob){
 if(!blob){result.innerText="Compression failed.";return;}
 let oldSize=(file.size/1024).toFixed(1),newSize=(blob.size/1024).toFixed(1);
 let ext=outputType==="image/png"?"png":outputType==="image/webp"?"webp":"jpg";
-downloadBlob(blob,"SandyTools-Compressed."+ext);
+showDownloadButton(result,blob,"SandyTools-Compressed."+ext,"Compression completed.");
 let change=file.size?((1-blob.size/file.size)*100).toFixed(1):"0.0";
 result.innerText="Original: "+oldSize+" KB → "+newSize+" KB ("+(change>=0?change+"% smaller":Math.abs(change)+"% larger")+"). Download started.";
 },outputType,quality);
@@ -61,7 +61,7 @@ if(!height||height<1){result.innerText="Enter a valid height.";return;}
 let canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
 canvas.getContext("2d").drawImage(img,0,0,width,height);
 let type=file.type==="image/png"?"image/png":file.type==="image/webp"?"image/webp":"image/jpeg";
-canvas.toBlob(function(blob){if(!blob){result.innerText="Resize failed.";return;}let ext=type==="image/png"?"png":type==="image/webp"?"webp":"jpg";downloadBlob(blob,"SandyTools-Resized."+ext);result.innerText="Resized to "+width+" × "+height+" px. Download started.";},type,.92);
+canvas.toBlob(function(blob){if(!blob){result.innerText="Resize failed.";return;}let ext=type==="image/png"?"png":type==="image/webp"?"webp":"jpg";showDownloadButton(result,blob,"SandyTools-Resized."+ext,"Resized to "+width+" × "+height+" px.");},type,.92);
 };img.src=e.target.result;};reader.readAsDataURL(file);
 }
 function generateQR(){
@@ -135,6 +135,10 @@ result.innerText="Could not merge PDF files. Please check the selected files.";
 
 
 /* SandyTools — New popular tools */
+function showDownloadButton(result,blob,name,message){
+let url=URL.createObjectURL(blob);
+result.innerHTML=message+'<br><a class="download-btn" href="'+url+'" download="'+name+'">⬇ Download '+name+'</a>';
+}
 function downloadBlob(blob,name){
 let url=URL.createObjectURL(blob),a=document.createElement("a");
 a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
@@ -239,15 +243,14 @@ function addNewToolsSection(){}
 document.addEventListener("DOMContentLoaded",addNewToolsSection);
 
 /* SandyTools — Image & Video editing tools */
-async function removeImageBackground(){
+async async function removeImageBackground(){
 let file=document.getElementById("bgRemoveFile")?.files[0],result=document.getElementById("bgRemoveResult");
 if(!file){result.innerText="Select an image first.";return;}
 result.innerText="Loading background-removal model… first run can take longer.";
 try{
 let mod=await import("https://cdn.jsdelivr.net/npm/@imgly/background-removal/+esm");
 let blob=await mod.removeBackground(file,{model:"isnet_quint8",output:{format:"image/png",quality:0.9}});
-downloadBlob(blob,"SandyTools-Background-Removed.png");
-result.innerText="Background removed successfully. PNG download started.";
+showDownloadButton(result,blob,"SandyTools-Background-Removed.png","Background removed successfully.");
 }catch(e){
 result.innerText="Background removal could not start. Try a modern browser and allow the model to load.";
 }
@@ -340,7 +343,7 @@ let img=new Image(),reader=new FileReader();
 reader.onload=function(e){img.onload=function(){
 let canvas=document.createElement("canvas");canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
 canvas.getContext("2d").drawImage(img,0,0);
-canvas.toBlob(function(blob){if(!blob){result.innerText="Conversion failed.";return;}let ext=type==="image/png"?"png":type==="image/webp"?"webp":"jpg";downloadBlob(blob,"SandyTools-Converted."+ext);result.innerText="Image converted to "+ext.toUpperCase()+" successfully.";},type,0.92);
+canvas.toBlob(function(blob){if(!blob){result.innerText="Conversion failed.";return;}let ext=type==="image/png"?"png":type==="image/webp"?"webp":"jpg";showDownloadButton(result,blob,"SandyTools-Converted."+ext,"Image converted to "+ext.toUpperCase()+" successfully.");},type,0.92);
 };img.src=e.target.result;};reader.readAsDataURL(file);
 }
 document.addEventListener("DOMContentLoaded",addMediaToolsSection);
