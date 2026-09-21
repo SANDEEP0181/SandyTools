@@ -164,7 +164,7 @@ result.innerText="PDF created successfully.";
 async function loadPdfJs(){
 if(window.pdfjsLib)return window.pdfjsLib;
 return await new Promise(function(resolve,reject){
-let s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";s.type="module";
+let s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
 s.onload=function(){setTimeout(function(){if(window.pdfjsLib)resolve(window.pdfjsLib);else reject(new Error("PDF.js unavailable"));},500)};
 s.onerror=reject;document.head.appendChild(s);
 });
