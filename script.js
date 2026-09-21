@@ -20,57 +20,49 @@ function toLowerCaseText(){document.getElementById("caseResult").innerText=docum
 function dateDifference(){let a=new Date(document.getElementById("dateOne").value),b=new Date(document.getElementById("dateTwo").value);if(isNaN(a)||isNaN(b)){document.getElementById("dateResult").innerText="Select both dates";return;}document.getElementById("dateResult").innerText="Difference: "+Math.abs(Math.round((b-a)/86400000))+" days";}
 function calculateTime(){let a=document.getElementById("timeOne").value,b=document.getElementById("timeTwo").value;if(!a||!b){document.getElementById("timeResult").innerText="Select both times";return;}let x=a.split(":").map(Number),y=b.split(":").map(Number),d=Math.abs((y[0]*60+y[1])-(x[0]*60+x[1]));document.getElementById("timeResult").innerText="Difference: "+Math.floor(d/60)+" hours "+d%60+" minutes";}
 function convertUnit(){let v=Number(document.getElementById("unitValue").value),t=document.getElementById("unitType").value,r=0;if(t==="kmm")r=v*0.621371;if(t==="mikm")r=v*1.60934;if(t==="kgp")r=v*2.20462;if(t==="lbkg")r=v*0.453592;if(t==="cmft")r=v*0.0328084;if(t==="ftcm")r=v*30.48;document.getElementById("unitResult").innerText="Result: "+r.toFixed(4);}
-function generatePassword(){let n=Number(document.getElementById("passwordLength").value)||16,c="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*",p="";for(let i=0;i<n;i++)p+=c[Math.floor(Math.random()*c.length)];document.getElementById("passwordResult").innerText=p;}
+function generatePassword(){
+let n=Math.min(100,Math.max(4,Number(document.getElementById("passwordLength")?.value)||16));
+let c="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_-+=?";
+let p="";
+let values=new Uint32Array(n);
+if(window.crypto&&window.crypto.getRandomValues){window.crypto.getRandomValues(values);for(let i=0;i<n;i++)p+=c[values[i]%c.length];}
+else{for(let i=0;i<n;i++)p+=c[Math.floor(Math.random()*c.length)];}
+let out=document.getElementById("passwordResult");
+out.innerHTML="<strong>"+p+"</strong><br><button type='button' onclick='copyToolText("+JSON.stringify(p)+")'>Copy Password</button>";
+}
 function compressImageFile(){
-let file=document.getElementById("compressImage").files[0];
-let result=document.getElementById("compressResult");
+let file=document.getElementById("compressImage")?.files[0],result=document.getElementById("compressResult");
 if(!file){result.innerText="Select an image first.";return;}
-let img=new Image();
-let reader=new FileReader();
-reader.onload=function(e){
-img.onload=function(){
-let canvas=document.createElement("canvas");
-canvas.width=img.width;
-canvas.height=img.height;
-let ctx=canvas.getContext("2d");
-ctx.drawImage(img,0,0);
-let quality=Number(document.getElementById("compressQuality").value)/100;
-let outputType=file.type==="image/png"?"image/png":"image/jpeg";
+let img=new Image(),reader=new FileReader();
+reader.onload=function(e){img.onload=function(){
+let canvas=document.createElement("canvas");canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+canvas.getContext("2d").drawImage(img,0,0);
+let quality=Number(document.getElementById("compressQuality")?.value||70)/100;
+let outputType=document.getElementById("compressFormat")?.value||"image/jpeg";
 canvas.toBlob(function(blob){
-let url=URL.createObjectURL(blob);
-let oldSize=(file.size/1024).toFixed(1);
-let newSize=(blob.size/1024).toFixed(1);
-result.innerHTML="Original: "+oldSize+" KB | Compressed: "+newSize+" KB<br><a href='" + url + "' download='compressed-image.jpg'>Download Compressed Image</a>";
+if(!blob){result.innerText="Compression failed.";return;}
+let oldSize=(file.size/1024).toFixed(1),newSize=(blob.size/1024).toFixed(1);
+let ext=outputType==="image/png"?"png":outputType==="image/webp"?"webp":"jpg";
+downloadBlob(blob,"SandyTools-Compressed."+ext);
+let change=file.size?((1-blob.size/file.size)*100).toFixed(1):"0.0";
+result.innerText="Original: "+oldSize+" KB → "+newSize+" KB ("+(change>=0?change+"% smaller":Math.abs(change)+"% larger")+"). Download started.";
 },outputType,quality);
-};
-img.src=e.target.result;
-};
-reader.readAsDataURL(file);
+};img.src=e.target.result;};reader.readAsDataURL(file);
 }
 function resizeImageFile(){
-let file=document.getElementById("resizeImage").files[0];
-let width=Number(document.getElementById("resizeWidth").value);
-let height=Number(document.getElementById("resizeHeight").value);
-let result=document.getElementById("resizeResult");
+let file=document.getElementById("resizeImage")?.files[0],result=document.getElementById("resizeResult");
+let width=Number(document.getElementById("resizeWidth")?.value),height=Number(document.getElementById("resizeHeight")?.value);
 if(!file){result.innerText="Select an image first.";return;}
-if(!width||!height||width<1||height<1){result.innerText="Enter valid width and height.";return;}
-let img=new Image();
-let reader=new FileReader();
-reader.onload=function(e){
-img.onload=function(){
-let canvas=document.createElement("canvas");
-canvas.width=width;
-canvas.height=height;
-let ctx=canvas.getContext("2d");
-ctx.drawImage(img,0,0,width,height);
-canvas.toBlob(function(blob){
-let url=URL.createObjectURL(blob);
-result.innerHTML="New Size: "+width+" x "+height+" px<br><a href='" + url + "' download='resized-image.jpg'>Download Resized Image</a>";
-}, "image/jpeg", 0.90);
-};
-img.src=e.target.result;
-};
-reader.readAsDataURL(file);
+if(!width||width<1){result.innerText="Enter a valid width.";return;}
+let img=new Image(),reader=new FileReader();
+reader.onload=function(e){img.onload=function(){
+if(document.getElementById("keepRatio")?.checked)height=Math.round(width*img.naturalHeight/img.naturalWidth);
+if(!height||height<1){result.innerText="Enter a valid height.";return;}
+let canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
+canvas.getContext("2d").drawImage(img,0,0,width,height);
+let type=file.type==="image/png"?"image/png":file.type==="image/webp"?"image/webp":"image/jpeg";
+canvas.toBlob(function(blob){if(!blob){result.innerText="Resize failed.";return;}let ext=type==="image/png"?"png":type==="image/webp"?"webp":"jpg";downloadBlob(blob,"SandyTools-Resized."+ext);result.innerText="Resized to "+width+" × "+height+" px. Download started.";},type,.92);
+};img.src=e.target.result;};reader.readAsDataURL(file);
 }
 function generateQR(){
 let text=document.getElementById("qrText").value.trim();
@@ -171,15 +163,18 @@ s.onerror=reject;document.head.appendChild(s);
 }
 async function pdfToJPG(){
 let file=document.getElementById("pdfJpgFile")?.files[0],result=document.getElementById("pdfJpgResult");
+let pageNo=Math.max(1,Number(document.getElementById("pdfJpgPage")?.value)||1);
 if(!file){result.innerText="Select a PDF first.";return;}
-result.innerText="Preparing PDF preview...";
+result.innerText="Rendering PDF page…";
 try{
 let lib=await loadPdfJs();if(!lib||!lib.getDocument)throw new Error("load");
-let data=await file.arrayBuffer(),pdf=await lib.getDocument({data}).promise,page=await pdf.getPage(1);
-let viewport=page.getViewport({scale:1.5}),canvas=document.createElement("canvas");canvas.width=viewport.width;canvas.height=viewport.height;
+let data=await file.arrayBuffer(),pdf=await lib.getDocument({data}).promise;
+if(pageNo>pdf.numPages){result.innerText="Page "+pageNo+" does not exist. This PDF has "+pdf.numPages+" pages.";return;}
+let page=await pdf.getPage(pageNo),viewport=page.getViewport({scale:1.5}),canvas=document.createElement("canvas");
+canvas.width=viewport.width;canvas.height=viewport.height;
 await page.render({canvasContext:canvas.getContext("2d"),viewport}).promise;
-canvas.toBlob(function(blob){downloadBlob(blob,"SandyTools-PDF-Page-1.jpg");result.innerText="First PDF page converted to JPG.";}, "image/jpeg", .92);
-}catch(e){result.innerText="PDF to JPG could not load in this browser. Try again or use a modern browser.";}
+canvas.toBlob(function(blob){downloadBlob(blob,"SandyTools-PDF-Page-"+pageNo+".jpg");result.innerText="Page "+pageNo+" converted to JPG. Download started.";}, "image/jpeg", .92);
+}catch(e){result.innerText="PDF to JPG could not load in this browser. Try again.";}
 }
 async function compressPDF(){
 let file=document.getElementById("compressPdfFile")?.files[0],result=document.getElementById("compressPdfResult");
@@ -195,14 +190,17 @@ result.innerText="Processed: "+oldSize+" KB → "+newSize+" KB. PDF structure wa
 async function splitPDF(){
 let file=document.getElementById("splitPdfFile")?.files[0],result=document.getElementById("splitPdfResult");
 if(!file){result.innerText="Select a PDF first.";return;}
-let pageNo=Math.max(1,Number(document.getElementById("splitPage")?.value)||1);
+let start=Math.max(1,Number(document.getElementById("splitStart")?.value)||1),end=Math.max(start,Number(document.getElementById("splitEnd")?.value)||start);
 if(typeof PDFLib==="undefined"){result.innerText="PDF library is loading. Refresh and try again.";return;}
 try{
-let src=await PDFLib.PDFDocument.load(await file.arrayBuffer());
-if(pageNo>src.getPageCount()){result.innerText="Page number is greater than the PDF page count.";return;}
-let out=await PDFLib.PDFDocument.create(),[page]=await out.copyPages(src,[pageNo-1]);out.addPage(page);
-let bytes=await out.save();downloadBlob(new Blob([bytes],{type:"application/pdf"}),"SandyTools-Page-"+pageNo+".pdf");
-result.innerText="Page "+pageNo+" extracted successfully.";
+let src=await PDFLib.PDFDocument.load(await file.arrayBuffer()),count=src.getPageCount();
+if(start>count){result.innerText="Start page is beyond the PDF page count ("+count+").";return;}
+end=Math.min(end,count);
+let indexes=[];for(let i=start-1;i<end;i++)indexes.push(i);
+let out=await PDFLib.PDFDocument.create(),pages=await out.copyPages(src,indexes);
+pages.forEach(p=>out.addPage(p));
+let bytes=await out.save();downloadBlob(new Blob([bytes],{type:"application/pdf"}),"SandyTools-Pages-"+start+"-"+end+".pdf");
+result.innerText="Pages "+start+"–"+end+" extracted successfully. Download started.";
 }catch(e){result.innerText="Could not split this PDF.";}
 }
 function makePassportPhoto(){
@@ -220,18 +218,27 @@ canvas.toBlob(function(blob){downloadBlob(blob,"SandyTools-Passport-Photo.jpg");
 function formatJSON(){
 let input=document.getElementById("jsonInput")?.value.trim(),result=document.getElementById("jsonResult");
 if(!input){result.innerText="Paste JSON first.";return;}
-try{result.textContent=JSON.stringify(JSON.parse(input),null,2);}catch(e){result.innerText="Invalid JSON: "+e.message;}
+try{
+let parsed=JSON.parse(input),pretty=JSON.stringify(parsed,null,2);
+result.innerHTML="<pre style='white-space:pre-wrap;word-break:break-word;margin:0'>"+escapeHtml(pretty)+"</pre><br><button type='button' onclick='copyToolText("+JSON.stringify(pretty)+")'>Copy</button> <button type='button' onclick='downloadBlob(new Blob(["+JSON.stringify(pretty)+"],{type:"+"application/json"+"}),"+"SandyTools-formatted.json"+")'>Download JSON</button>";
+}catch(e){result.innerText="Invalid JSON: "+e.message;}
 }
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[ch]||ch;});}
+function copyToolText(text){
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){alert("Copied to clipboard.");}).catch(function(){fallbackCopy(text);});}
+else fallbackCopy(text);
+}
+function fallbackCopy(text){let t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();alert("Copied to clipboard.");}
 function addNewToolsSection(){
 if(!document.body||document.getElementById("new-popular-tools")||!document.querySelector('link[href="style.css"]'))return;
 let main=document.querySelector("main");if(!main)return;
 let sec=document.createElement("section");sec.className="tool-section";sec.id="new-popular-tools";
-sec.innerHTML='<div class="section-heading"><div><span class="section-kicker">06</span><h2>Popular New Tools</h2></div><p>More useful tools for everyday tasks.</p></div><div class="tool-grid">'+
+sec.innerHTML='<div class="section-heading"><div><span class="section-kicker">06</span><h2>Popular New Tools</h2></div><p>10 practical tools, built to work directly in your browser.</p></div><div class="tool-grid">'+
 '<div class="tool-box" data-name="jpg to pdf image to pdf"><div class="tool-icon">PDF</div><div class="tool-info"><h3>JPG → PDF</h3><p>Convert a JPG or PNG image into a PDF.</p><button onclick="openTool(\'jpgToPDF\')">Open</button></div><div id="jpgToPDF" class="tool-panel"><input type="file" id="jpgPdfFile" accept="image/jpeg,image/png"><button onclick="jpgToPDF()">Convert to PDF</button><div id="jpgPdfResult" class="result">Select an image first.</div></div></div>'+
-'<div class="tool-box" data-name="pdf to jpg"><div class="tool-icon">IMG</div><div class="tool-info"><h3>PDF → JPG</h3><p>Convert the first PDF page to JPG.</p><button onclick="openTool(\'pdfToJPG\')">Open</button></div><div id="pdfToJPG" class="tool-panel"><input type="file" id="pdfJpgFile" accept=".pdf,application/pdf"><button onclick="pdfToJPG()">Convert to JPG</button><div id="pdfJpgResult" class="result">Select a PDF first.</div></div></div>'+
+'<div class="tool-box" data-name="pdf to jpg"><div class="tool-icon">IMG</div><div class="tool-info"><h3>PDF → JPG</h3><p>Convert any selected PDF page to JPG.</p><button onclick="openTool(\'pdfToJPG\')">Open</button></div><div id="pdfToJPG" class="tool-panel"><input type="file" id="pdfJpgFile" accept=".pdf,application/pdf"><input type="number" id="pdfJpgPage" min="1" value="1" placeholder="Page number"><button onclick="pdfToJPG()">Convert to JPG</button><div id="pdfJpgResult" class="result">Select a PDF first.</div></div></div>'+
 '<div class="tool-box" data-name="pdf compressor"><div class="tool-icon">PDF</div><div class="tool-info"><h3>PDF Compressor</h3><p>Optimize PDF structure and reduce size when possible.</p><button onclick="openTool(\'pdfCompressor\')">Open</button></div><div id="pdfCompressor" class="tool-panel"><input type="file" id="compressPdfFile" accept=".pdf,application/pdf"><button onclick="compressPDF()">Compress PDF</button><div id="compressPdfResult" class="result">Select a PDF first.</div></div></div>'+
 '<div class="tool-box" data-name="passport photo maker india"><div class="tool-icon">ID</div><div class="tool-info"><h3>Passport Photo Maker</h3><p>Create a standard 413 × 531 px photo.</p><button onclick="openTool(\'passportPhoto\')">Open</button></div><div id="passportPhoto" class="tool-panel"><input type="file" id="passportFile" accept="image/*"><button onclick="makePassportPhoto()">Create Photo</button><div id="passportResult" class="result">Select a photo first.</div></div></div>'+
-'<div class="tool-box" data-name="split pdf pdf splitter"><div class="tool-icon">PDF</div><div class="tool-info"><h3>Split PDF</h3><p>Extract one page from a PDF.</p><button onclick="openTool(\'splitPdf\')">Open</button></div><div id="splitPdf" class="tool-panel"><input type="file" id="splitPdfFile" accept=".pdf,application/pdf"><input type="number" id="splitPage" min="1" value="1" placeholder="Page number"><button onclick="splitPDF()">Extract Page</button><div id="splitPdfResult" class="result">Select a PDF first.</div></div></div>'+
+'<div class="tool-box" data-name="split pdf pdf splitter"><div class="tool-icon">PDF</div><div class="tool-info"><h3>Split PDF</h3><p>Extract a page or a range of pages.</p><button onclick="openTool(\'splitPdf\')">Open</button></div><div id="splitPdf" class="tool-panel"><input type="file" id="splitPdfFile" accept=".pdf,application/pdf"><input type="number" id="splitStart" min="1" value="1" placeholder="Start page"><input type="number" id="splitEnd" min="1" value="1" placeholder="End page"><button onclick="splitPDF()">Extract Pages</button><div id="splitPdfResult" class="result">Select a PDF first.</div></div></div>'+
 '<div class="tool-box" data-name="json formatter validator developer"><div class="tool-icon">{ }</div><div class="tool-info"><h3>JSON Formatter</h3><p>Format and validate JSON instantly.</p><button onclick="openTool(\'jsonFormatter\')">Open</button></div><div id="jsonFormatter" class="tool-panel"><textarea id="jsonInput" rows="6" placeholder="{&quot;name&quot;:&quot;SandyTools&quot;}"></textarea><button onclick="formatJSON()">Format JSON</button><div id="jsonResult" class="result">Paste JSON first.</div></div></div>'+
 '</div>';main.appendChild(sec);
 }
