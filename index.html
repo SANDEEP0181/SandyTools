@@ -155,7 +155,7 @@ imageResizer:'<input type="file" id="resizeImage" accept="image/*"><input type="
 qrGenerator:'<input type="text" id="qrText" placeholder="Enter text or website URL"><button onclick="generateQR()">Generate QR Code</button><div id="qrResult" class="result">Enter text or URL first.</div>',
 pdfMerger:'<input type="file" id="pdfFiles" accept=".pdf,application/pdf" multiple><button onclick="mergePDFs()">Merge PDF Files</button><div id="pdfResult" class="result">Select two or more PDF files.</div>'
 };
-panel.innerHTML=templates[id]||'';
+if(templates[id])panel.innerHTML=templates[id];
 });
 }
 document.addEventListener('DOMContentLoaded',setupToolPanels);
