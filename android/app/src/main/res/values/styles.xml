@@ -6,6 +6,12 @@
         <item name="android:navigationBarColor">@color/sandytools_white</item>
         <item name="android:statusBarColor">@color/sandytools_white</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowBackground">@color/sandytools_blue</item>
+    </style>
+    <style name="Theme.SandyTools.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/sandytools_blue</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_sandytools_logo</item>
+        <item name="windowSplashScreenAnimationDuration">400</item>
+        <item name="postSplashScreenTheme">@style/Theme.SandyTools</item>
     </style>
 </resources>
