@@ -3,195 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SandyTools - Free Online Tools, Calculators & Generators</title>
-
-<meta name="description" content="SandyTools provides free online calculators, image tools, QR code generator, PDF tools, YouTube tools and useful everyday utilities.">
-
+<title>SandyTools - Free Online Tools</title>
+<meta name="description" content="SandyTools provides free online calculators, text, image, QR, PDF and YouTube tools.">
 <meta name="author" content="SandyTools">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#0f172a">
-
+<meta name="theme-color" content="#2563eb">
 <link rel="canonical" href="https://sandeep0181.github.io/SandyTools/">
-
-<meta property="og:title" content="SandyTools - Free Online Tools & Calculators">
-<meta property="og:description" content="Free online calculators, image tools, QR code generator, PDF tools, YouTube tools and more.">
+<meta property="og:title" content="SandyTools - Free Online Tools">
+<meta property="og:description" content="Free calculators, text, image, QR, PDF and creator tools.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sandeep0181.github.io/SandyTools/">
 <meta property="og:site_name" content="SandyTools">
-
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SandyTools - Free Online Tools & Calculators">
-<meta name="twitter:description" content="Free online tools, calculators, image tools, QR code generator, PDF tools and YouTube tools.">
-
-<meta name="google-site-verification" content="ebr-iA_gLa3MxGSNUE_kTMu1CuOwWzA4MYgRZ7IYem4" />
-
+<meta name="google-site-verification" content="ebr-iA_gLa3MxGSNUE_kTMu1CuOwWzA4MYgRZ7IYem4">
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "SandyTools",
-  "url": "https://sandeep0181.github.io/SandyTools/",
-  "description": "Free online tools, calculators, generators and useful everyday utilities."
-}
+{"@context":"https://schema.org","@type":"WebSite","name":"SandyTools","url":"https://sandeep0181.github.io/SandyTools/","description":"Free online tools, calculators, generators and useful everyday utilities."}
 </script>
 <link rel="stylesheet" href="style.css">
 <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
 <body>
 <header>
-<div class="wrap">
-<h1>SandyTools</h1>
-<p>Free Online Tools</p>
+<div class="wrap topbar">
+<a class="brand" href="./" aria-label="SandyTools home"><span class="brand-mark">S</span><span><strong>SandyTools</strong><small>Free Online Tools</small></span></a>
 <nav class="site-nav" aria-label="Main navigation">
-<a href="./">Home</a>
-<a href="calculator.html">Calculators</a>
-<a href="qr-generator.html">QR Generator</a>
-<a href="image-tools.html">Image Tools</a>
-<a href="pdf-tools.html">PDF Tools</a>
-<a href="youtube-tools.html">YouTube Tools</a>
-<a href="about.html">About</a>
-<a href="contact.html">Contact</a>
-<a href="privacy.html">Privacy</a>
-<a href="terms.html">Terms</a>
+<a href="./">Home</a><a href="calculator.html">Calculators</a><a href="qr-generator.html">QR</a><a href="image-tools.html">Images</a><a href="pdf-tools.html">PDF</a><a href="youtube-tools.html">YouTube</a>
 </nav>
 </div>
 </header>
+
 <main class="wrap">
 <section class="hero">
-<h2>Free Online Tools & Calculators</h2>
-<p>Fast, simple and free tools for everyone.</p>
-<input id="searchTools" type="search" aria-label="Search tools" autocomplete="off" placeholder="Search any tool...">
+<div class="hero-copy">
+<span class="eyebrow">SANDYTOOLS</span>
+<h1>Useful tools. <span>Simple.</span> Fast.</h1>
+<p>Calculators, text utilities, image tools, QR generation and PDF tools — organized in one clean workspace.</p>
+</div>
+<div class="search-wrap">
+<span aria-hidden="true">⌕</span>
+<input id="searchTools" type="search" aria-label="Search tools" autocomplete="off" placeholder="Search tools...">
+</div>
+<div class="quick-links">
+<a href="#calculators">Calculators</a><a href="#text">Text</a><a href="#media">Image & QR</a><a href="#pdf">PDF</a><a href="youtube-tools.html">YouTube</a>
+</div>
 </section>
 
-<section class="hero">
-<h2>Simple Tools for Everyday Tasks</h2>
-<p>SandyTools brings calculators, text utilities, image tools, QR tools, PDF utilities and creator tools together in one easy-to-use website.</p>
-<p>Choose a tool, enter your information and get the result directly in your browser. For important financial or business decisions, verify calculator results independently.</p>
-</section>
-
-<section class="hero">
-<h2>Popular SandyTools</h2><p>Explore dedicated pages for our calculators, QR generator, image tools, PDF tools and YouTube creator tools.</p>
-<p><a href="calculator.html">Calculators</a> · <a href="qr-generator.html">QR Code Generator</a> · <a href="image-tools.html">Image Tools</a> · <a href="pdf-tools.html">PDF Tools</a> · <a href="youtube-tools.html">YouTube Tools</a></p>
-</section>
-
+<section class="tool-section" id="calculators">
+<div class="section-heading"><div><span class="section-kicker">01</span><h2>Calculators</h2></div><p>Everyday calculations in a few taps.</p></div>
 <div class="tool-grid">
-<div class="tool-box" data-name="percentage calculator"><h3>Percentage Calculator</h3><p>Calculate percentages quickly.</p><button onclick="openTool('percentage')">Open Tool</button><div id="percentage" class="tool-panel"><input id="percentValue" type="number" placeholder="Enter value"><input id="percentTotal" type="number" placeholder="Enter total"><button onclick="calculatePercentage()">Calculate</button><div id="percentResult" class="result"></div></div></div>
-<div class="tool-box" data-name="age calculator"><h3>Age Calculator</h3><p>Calculate your exact age.</p><button onclick="openTool('age')">Open Tool</button><div id="age" class="tool-panel"><input id="birthDate" type="date"><button onclick="calculateAge()">Calculate Age</button><div id="ageResult" class="result"></div></div></div>
-<div class="tool-box" data-name="emi calculator"><h3>EMI Calculator</h3><p>Calculate monthly loan EMI.</p><button onclick="openTool('emi')">Open Tool</button><div id="emi" class="tool-panel"><input id="loanAmount" type="number" placeholder="Loan Amount"><input id="interestRate" type="number" placeholder="Annual Interest %"><input id="loanYears" type="number" placeholder="Loan Years"><button onclick="calculateEMI()">Calculate EMI</button><div id="emiResult" class="result"></div></div></div>
-<div class="tool-box" data-name="gst calculator"><h3>GST Calculator</h3><p>Calculate GST amount.</p><button onclick="openTool('gst')">Open Tool</button><div id="gst" class="tool-panel"><input id="gstAmount" type="number" placeholder="Amount"><input id="gstRate" type="number" placeholder="GST %"><button onclick="calculateGST()">Calculate GST</button><div id="gstResult" class="result"></div></div></div>
-<div class="tool-box" data-name="sip calculator"><h3>SIP Calculator</h3><p>Estimate SIP investment value.</p><button onclick="openTool('sip')">Open Tool</button><div id="sip" class="tool-panel"><input id="sipMonthly" type="number" placeholder="Monthly Investment"><input id="sipRate" type="number" placeholder="Expected Return %"><input id="sipYears" type="number" placeholder="Years"><button onclick="calculateSIP()">Calculate SIP</button><div id="sipResult" class="result"></div></div></div>
-<div class="tool-box" data-name="discount calculator"><h3>Discount Calculator</h3><p>Calculate discount and final price.</p><button onclick="openTool('discount')">Open Tool</button><div id="discount" class="tool-panel"><input id="discountPrice" type="number" placeholder="Original Price"><input id="discountRate" type="number" placeholder="Discount %"><button onclick="calculateDiscount()">Calculate Discount</button><div id="discountResult" class="result"></div></div></div>
+<div class="tool-box" data-name="percentage calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>Percentage</h3><p>Calculate percentages quickly.</p><button onclick="openTool('percentage')">Open</button></div><div id="percentage" class="tool-panel"></div></div><div class="tool-box" data-name="age calculator calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>Age Calculator</h3><p>Calculate your age from a birth date.</p><button onclick="openTool('age')">Open</button></div><div id="age" class="tool-panel"></div></div><div class="tool-box" data-name="emi calculator calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>EMI Calculator</h3><p>Estimate monthly loan EMI.</p><button onclick="openTool('emi')">Open</button></div><div id="emi" class="tool-panel"></div></div><div class="tool-box" data-name="gst calculator calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>GST Calculator</h3><p>Calculate GST and total amount.</p><button onclick="openTool('gst')">Open</button></div><div id="gst" class="tool-panel"></div></div><div class="tool-box" data-name="sip calculator calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>SIP Calculator</h3><p>Estimate SIP investment value.</p><button onclick="openTool('sip')">Open</button></div><div id="sip" class="tool-panel"></div></div><div class="tool-box" data-name="discount calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>Discount</h3><p>Calculate discount and final price.</p><button onclick="openTool('discount')">Open</button></div><div id="discount" class="tool-panel"></div></div>
 </div>
+</section>
 
+<section class="tool-section" id="text">
+<div class="section-heading"><div><span class="section-kicker">02</span><h2>Text & Creator</h2></div><p>Quick tools for writing and content.</p></div>
 <div class="tool-grid">
-<div class="tool-box" data-name="youtube title generator"><h3>YouTube Title Generator</h3><p>Create catchy video titles.</p><button onclick="openTool('title')">Open Tool</button><div id="title" class="tool-panel"><input id="titleTopic" placeholder="Enter video topic"><button onclick="generateTitle()">Generate Title</button><div id="titleResult" class="result"></div></div></div>
-<div class="tool-box" data-name="youtube description generator"><h3>YouTube Description Generator</h3><p>Create video descriptions.</p><button onclick="openTool('description')">Open Tool</button><div id="description" class="tool-panel"><input id="descriptionTopic" placeholder="Enter video topic"><button onclick="generateDescription()">Generate Description</button><div id="descriptionResult" class="result"></div></div></div>
-<div class="tool-box" data-name="hashtag generator"><h3>Hashtag Generator</h3><p>Generate useful hashtags.</p><button onclick="openTool('hashtags')">Open Tool</button><div id="hashtags" class="tool-panel"><input id="hashtagTopic" placeholder="Enter topic"><button onclick="generateHashtags()">Generate Hashtags</button><div id="hashtagResult" class="result"></div></div></div>
-<div class="tool-box" data-name="word counter"><h3>Word Counter</h3><p>Count words in your text.</p><button onclick="openTool('words')">Open Tool</button><div id="words" class="tool-panel"><textarea id="wordText" rows="5" placeholder="Type or paste text"></textarea><button onclick="countWords()">Count Words</button><div id="wordResult" class="result"></div></div></div>
-<div class="tool-box" data-name="character counter"><h3>Character Counter</h3><p>Count characters in text.</p><button onclick="openTool('characters')">Open Tool</button><div id="characters" class="tool-panel"><textarea id="characterText" rows="5" placeholder="Type or paste text"></textarea><button onclick="countCharacters()">Count Characters</button><div id="characterResult" class="result"></div></div></div>
-<div class="tool-box" data-name="case converter"><h3>Case Converter</h3><p>Convert text uppercase or lowercase.</p><button onclick="openTool('case')">Open Tool</button><div id="case" class="tool-panel"><textarea id="caseText" rows="5" placeholder="Enter text"></textarea><button onclick="toUpperCaseText()">UPPERCASE</button><button onclick="toLowerCaseText()">lowercase</button><div id="caseResult" class="result"></div></div></div>
+<div class="tool-box" data-name="youtube title generator"><div class="tool-icon">Aa</div><div class="tool-info"><h3>YouTube Title Generator</h3><p>Create video titles.</p><button onclick="openTool('title')">Open</button></div><div id="title" class="tool-panel"></div></div><div class="tool-box" data-name="youtube description generator"><div class="tool-icon">Aa</div><div class="tool-info"><h3>YouTube Description Generator</h3><p>Create video descriptions.</p><button onclick="openTool('description')">Open</button></div><div id="description" class="tool-panel"></div></div><div class="tool-box" data-name="hashtag generator"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Hashtag Generator</h3><p>Generate useful hashtags.</p><button onclick="openTool('hashtags')">Open</button></div><div id="hashtags" class="tool-panel"></div></div><div class="tool-box" data-name="word counter"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Word Counter</h3><p>Count words in text.</p><button onclick="openTool('words')">Open</button></div><div id="words" class="tool-panel"></div></div><div class="tool-box" data-name="character counter"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Character Counter</h3><p>Count characters.</p><button onclick="openTool('characters')">Open</button></div><div id="characters" class="tool-panel"></div></div><div class="tool-box" data-name="case converter"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Case Converter</h3><p>Convert text case.</p><button onclick="openTool('case')">Open</button></div><div id="case" class="tool-panel"></div></div>
 </div>
+</section>
 
+<section class="tool-section" id="utilities">
+<div class="section-heading"><div><span class="section-kicker">03</span><h2>Utilities</h2></div><p>Small tools for everyday tasks.</p></div>
 <div class="tool-grid">
-<div class="tool-box" data-name="date difference"><h3>Date Difference</h3><p>Find difference between dates.</p><button onclick="openTool('date')">Open Tool</button><div id="date" class="tool-panel"><input id="dateOne" type="date"><input id="dateTwo" type="date"><button onclick="dateDifference()">Calculate Difference</button><div id="dateResult" class="result"></div></div></div>
-<div class="tool-box" data-name="time calculator"><h3>Time Calculator</h3><p>Calculate time difference.</p><button onclick="openTool('time')">Open Tool</button><div id="time" class="tool-panel"><input id="timeOne" type="time"><input id="timeTwo" type="time"><button onclick="calculateTime()">Calculate Difference</button><div id="timeResult" class="result"></div></div></div>
-<div class="tool-box" data-name="unit converter"><h3>Unit Converter</h3><p>Convert common units.</p><button onclick="openTool('unit')">Open Tool</button><div id="unit" class="tool-panel"><input id="unitValue" type="number" placeholder="Enter value"><select id="unitType"><option value="kmm">Kilometers to Miles</option><option value="mikm">Miles to Kilometers</option><option value="kgp">Kilograms to Pounds</option><option value="lbkg">Pounds to Kilograms</option><option value="cmft">Centimeters to Feet</option><option value="ftcm">Feet to Centimeters</option></select><button onclick="convertUnit()">Convert</button><div id="unitResult" class="result"></div></div></div>
-<div class="tool-box" data-name="password generator"><h3>Password Generator</h3><p>Generate a random password.</p><button onclick="openTool('password')">Open Tool</button><div id="password" class="tool-panel"><input id="passwordLength" type="number" value="16" min="4" max="50"><button onclick="generatePassword()">Generate Password</button><div id="passwordResult" class="result"></div></div></div>
-
-<div class="tool-box" data-name="image compressor">
-<h3>Image Compressor</h3>
-<p>Compress JPG, PNG and WebP images directly in your browser.</p>
-<button onclick="openTool('imageCompressor')">Open Tool</button>
-<div id="imageCompressor" class="tool-panel">
-<input type="file" id="compressImage" accept="image/*">
-<label>Quality: <span id="qualityValue">70</span>%</label>
-<input type="range" id="compressQuality" min="10" max="100" value="70" oninput="document.getElementById('qualityValue').innerText=this.value">
-<button onclick="compressImageFile()">Compress Image</button>
-<div id="compressResult" class="result">Select an image first.</div>
+<div class="tool-box" data-name="date difference"><div class="tool-icon">✦</div><div class="tool-info"><h3>Date Difference</h3><p>Find the difference between dates.</p><button onclick="openTool('date')">Open</button></div><div id="date" class="tool-panel"></div></div><div class="tool-box" data-name="time calculator"><div class="tool-icon">✦</div><div class="tool-info"><h3>Time Calculator</h3><p>Calculate time difference.</p><button onclick="openTool('time')">Open</button></div><div id="time" class="tool-panel"></div></div><div class="tool-box" data-name="unit converter"><div class="tool-icon">✦</div><div class="tool-info"><h3>Unit Converter</h3><p>Convert common units.</p><button onclick="openTool('unit')">Open</button></div><div id="unit" class="tool-panel"></div></div><div class="tool-box" data-name="password generator"><div class="tool-icon">✦</div><div class="tool-info"><h3>Password Generator</h3><p>Generate a random password.</p><button onclick="openTool('password')">Open</button></div><div id="password" class="tool-panel"></div></div>
 </div>
-</div>
-<div class="tool-box" data-name="image resizer">
-<h3>Image Resizer</h3>
-<p>Resize images to your required width and height.</p>
-<button onclick="openTool('imageResizer')">Open Tool</button>
-<div id="imageResizer" class="tool-panel">
-<input type="file" id="resizeImage" accept="image/*">
-<input type="number" id="resizeWidth" placeholder="Width in pixels">
-<input type="number" id="resizeHeight" placeholder="Height in pixels">
-<button onclick="resizeImageFile()">Resize Image</button>
-<div id="resizeResult" class="result">Select an image first.</div>
-</div>
-</div>
-<div class="tool-box" data-name="qr code generator">
-<h3>QR Code Generator</h3>
-<p>Create a QR code from any text or website URL.</p>
-<button onclick="openTool('qrGenerator')">Open Tool</button>
-<div id="qrGenerator" class="tool-panel">
-<input type="text" id="qrText" placeholder="Enter text or website URL">
-<button onclick="generateQR()">Generate QR Code</button>
-<div id="qrResult" class="result">Enter text or URL first.</div>
-</div>
-</div>
-<div class="tool-box" data-name="pdf merger">
-<h3>PDF Merger</h3>
-<p>Merge multiple PDF files into one PDF.</p>
-<button onclick="openTool('pdfMerger')">Open Tool</button>
-<div id="pdfMerger" class="tool-panel">
-<input type="file" id="pdfFiles" accept=".pdf,application/pdf" multiple>
-<button onclick="mergePDFs()">Merge PDF Files</button>
-<div id="pdfResult" class="result">Select two or more PDF files.</div>
-</div>
-</div></div>
-
-<section class="hero">
-<h2>Why Use SandyTools?</h2>
-<p>SandyTools is built around practical browser-based utilities for everyday calculations, text work, image processing, QR generation, PDF merging and creator tasks. The tools are designed to be quick to open, simple to understand and usable on modern phones and computers.</p>
-<p>Where possible, processing happens in your browser. This means you can use many tools without installing separate software. Third-party services are used only where a specific feature requires them; see the Privacy Policy for details.</p>
 </section>
 
-<section class="hero">
-<h2>How to Use Popular SandyTools</h2>
-<h3>Percentage Calculator</h3><p>Enter the value and total to calculate the percentage quickly.</p>
-<h3>Age Calculator</h3><p>Select a birth date to calculate age from the entered date.</p>
-<h3>EMI Calculator</h3><p>Enter loan amount, annual interest rate and loan period to estimate monthly EMI.</p>
-<h3>GST Calculator</h3><p>Enter an amount and GST rate to calculate the GST amount.</p>
-<h3>SIP Calculator</h3><p>Enter monthly investment, expected annual return and investment period to estimate the SIP value.</p>
-<h3>Discount Calculator</h3><p>Enter the original price and discount percentage to estimate the discount and final price.</p>
-<h3>Image Tools</h3><p>Use Image Compressor to reduce image size or Image Resizer to change image dimensions directly in your browser.</p>
-<h3>QR Code Generator</h3><p>Enter text or a website address to create a QR code.</p>
-<h3>PDF Merger</h3><p>Select multiple PDF files and combine them into one PDF using the browser-based tool.</p>
+<section class="tool-section" id="media">
+<div class="section-heading"><div><span class="section-kicker">04</span><h2>Image & QR</h2></div><p>Process common files directly in your browser.</p></div>
+<div class="tool-grid">
+<div class="tool-box wide-tool" data-name="image compressor"><div class="tool-icon">▣</div><div class="tool-info"><h3>Image Compressor</h3><p>Compress JPG, PNG and WebP images.</p><button onclick="openTool('imageCompressor')">Open</button></div><div id="imageCompressor" class="tool-panel"></div></div><div class="tool-box wide-tool" data-name="image resizer"><div class="tool-icon">▣</div><div class="tool-info"><h3>Image Resizer</h3><p>Resize images to your required size.</p><button onclick="openTool('imageResizer')">Open</button></div><div id="imageResizer" class="tool-panel"></div></div><div class="tool-box wide-tool" data-name="qr code generator"><div class="tool-icon">▣</div><div class="tool-info"><h3>QR Code Generator</h3><p>Create a QR code from text or a URL.</p><button onclick="openTool('qrGenerator')">Open</button></div><div id="qrGenerator" class="tool-panel"></div></div>
+</div>
 </section>
 
-<section class="hero">
-<h2>SandyTools FAQ</h2>
-<h3>How do I use SandyTools?</h3>
-<p>Choose a tool, open it, enter the required information and use the available button to calculate, convert or generate your result.</p>
-<h3>Are SandyTools tools free?</h3>
-<p>Yes. SandyTools is designed to provide these online utilities without requiring paid software or a separate installation.</p>
-<h3>Are my files or text stored?</h3>
-<p>Most tools process your input directly in your browser. SandyTools does not intentionally provide a feature to save your entered text or uploaded files on the website. Check the Privacy Policy for details about website services and third-party technologies.</p>
-<h3>Can I use SandyTools on a mobile phone?</h3>
-<p>Yes. The website is designed to work on modern mobile and desktop browsers.</p>
-<h3>Should I verify calculator results?</h3>
-<p>For important financial, business or other decisions, use calculator results as estimates and verify them with the relevant official or professional source.</p>
+<section class="tool-section" id="pdf">
+<div class="section-heading"><div><span class="section-kicker">05</span><h2>PDF</h2></div><p>Simple browser-based PDF utility.</p></div>
+<div class="tool-grid">
+<div class="tool-box wide-tool" data-name="pdf merger"><div class="tool-icon">PDF</div><div class="tool-info"><h3>PDF Merger</h3><p>Merge multiple PDF files into one PDF.</p><button onclick="openTool('pdfMerger')">Open</button></div><div id="pdfMerger" class="tool-panel"></div></div>
+</div>
 </section>
+
+<section class="compact-info">
+<div><strong>Free to use</strong><span>No separate software required.</span></div>
+<div><strong>Browser based</strong><span>Many tools process data locally.</span></div>
+<div><strong>Mobile friendly</strong><span>Designed for phones and desktops.</span></div>
+</section>
+
+<details class="seo-details">
+<summary>About SandyTools & FAQ</summary>
+<p>SandyTools brings practical calculators, text utilities, image processing, QR generation, PDF merging and creator tools together in one simple interface.</p>
+<h3>Are SandyTools tools free?</h3><p>Yes. SandyTools is designed to provide these online utilities without requiring paid software.</p>
+<h3>Can I use SandyTools on mobile?</h3><p>Yes. The interface is responsive and designed for modern phones and desktop browsers.</p>
+<h3>Should I verify calculator results?</h3><p>For important financial or business decisions, treat calculator results as estimates and verify them with the relevant official or professional source.</p>
+</details>
 </main>
-<footer>
-<div class="wrap">
-<p>© 2026 SandyTools. All rights reserved.</p>
-<p>
-<a href="about.html">About</a> |
-<a href="calculator.html">Calculators</a> |
-<a href="qr-generator.html">QR Generator</a> |
-<a href="image-tools.html">Image Tools</a> |
-<a href="pdf-tools.html">PDF Tools</a> |
-<a href="youtube-tools.html">YouTube Tools</a> |
-<a href="contact.html">Contact</a> |
-<a href="privacy.html">Privacy Policy</a> |
-<a href="terms.html">Terms of Use</a>
-</p>
-</div>
-</footer>
+
+<footer><div class="wrap"><strong>SandyTools</strong><p>© 2026 SandyTools · <a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p></div></footer>
 <script src="script.js"></script>
+<script>
+function setupToolPanels(){
+document.querySelectorAll('.tool-box').forEach(function(box){
+const id=box.querySelector('.tool-panel')?.id;
+const panel=box.querySelector('.tool-panel');
+if(!id||!panel)return;
+const templates={
+percentage:'<input id="percentValue" type="number" placeholder="Value"><input id="percentTotal" type="number" placeholder="Total"><button onclick="calculatePercentage()">Calculate</button><div id="percentResult" class="result"></div>',
+age:'<input id="birthDate" type="date"><button onclick="calculateAge()">Calculate Age</button><div id="ageResult" class="result"></div>',
+emi:'<input id="loanAmount" type="number" placeholder="Loan Amount"><input id="interestRate" type="number" placeholder="Annual Interest %"><input id="loanYears" type="number" placeholder="Loan Years"><button onclick="calculateEMI()">Calculate EMI</button><div id="emiResult" class="result"></div>',
+gst:'<input id="gstAmount" type="number" placeholder="Amount"><input id="gstRate" type="number" placeholder="GST %"><button onclick="calculateGST()">Calculate GST</button><div id="gstResult" class="result"></div>',
+sip:'<input id="sipMonthly" type="number" placeholder="Monthly Investment"><input id="sipRate" type="number" placeholder="Expected Return %"><input id="sipYears" type="number" placeholder="Years"><button onclick="calculateSIP()">Calculate SIP</button><div id="sipResult" class="result"></div>',
+discount:'<input id="discountPrice" type="number" placeholder="Original Price"><input id="discountRate" type="number" placeholder="Discount %"><button onclick="calculateDiscount()">Calculate Discount</button><div id="discountResult" class="result"></div>',
+title:'<input id="titleTopic" placeholder="Enter video topic"><button onclick="generateTitle()">Generate Title</button><div id="titleResult" class="result"></div>',
+description:'<input id="descriptionTopic" placeholder="Enter video topic"><button onclick="generateDescription()">Generate Description</button><div id="descriptionResult" class="result"></div>',
+hashtags:'<input id="hashtagTopic" placeholder="Enter topic"><button onclick="generateHashtags()">Generate Hashtags</button><div id="hashtagResult" class="result"></div>',
+words:'<textarea id="wordText" rows="4" placeholder="Type or paste text"></textarea><button onclick="countWords()">Count Words</button><div id="wordResult" class="result"></div>',
+characters:'<textarea id="characterText" rows="4" placeholder="Type or paste text"></textarea><button onclick="countCharacters()">Count Characters</button><div id="characterResult" class="result"></div>',
+case:'<textarea id="caseText" rows="4" placeholder="Enter text"></textarea><button onclick="toUpperCaseText()">UPPERCASE</button><button onclick="toLowerCaseText()">lowercase</button><div id="caseResult" class="result"></div>',
+date:'<input id="dateOne" type="date"><input id="dateTwo" type="date"><button onclick="dateDifference()">Calculate Difference</button><div id="dateResult" class="result"></div>',
+time:'<input id="timeOne" type="time"><input id="timeTwo" type="time"><button onclick="calculateTime()">Calculate Difference</button><div id="timeResult" class="result"></div>',
+unit:'<input id="unitValue" type="number" placeholder="Enter value"><select id="unitType"><option value="kmm">Kilometers to Miles</option><option value="mikm">Miles to Kilometers</option><option value="kgp">Kilograms to Pounds</option><option value="lbkg">Pounds to Kilograms</option><option value="cmft">Centimeters to Feet</option><option value="ftcm">Feet to Centimeters</option></select><button onclick="convertUnit()">Convert</button><div id="unitResult" class="result"></div>',
+password:'<input id="passwordLength" type="number" value="16" min="4" max="50"><button onclick="generatePassword()">Generate Password</button><div id="passwordResult" class="result"></div>',
+imageCompressor:'<input type="file" id="compressImage" accept="image/*"><label>Quality: <span id="qualityValue">70</span>%</label><input type="range" id="compressQuality" min="10" max="100" value="70" oninput="document.getElementById(\'qualityValue\').innerText=this.value"><button onclick="compressImageFile()">Compress Image</button><div id="compressResult" class="result">Select an image first.</div>',
+imageResizer:'<input type="file" id="resizeImage" accept="image/*"><input type="number" id="resizeWidth" placeholder="Width in pixels"><input type="number" id="resizeHeight" placeholder="Height in pixels"><button onclick="resizeImageFile()">Resize Image</button><div id="resizeResult" class="result">Select an image first.</div>',
+qrGenerator:'<input type="text" id="qrText" placeholder="Enter text or website URL"><button onclick="generateQR()">Generate QR Code</button><div id="qrResult" class="result">Enter text or URL first.</div>',
+pdfMerger:'<input type="file" id="pdfFiles" accept=".pdf,application/pdf" multiple><button onclick="mergePDFs()">Merge PDF Files</button><div id="pdfResult" class="result">Select two or more PDF files.</div>'
+};
+panel.innerHTML=templates[id]||'';
+});
+}
+document.addEventListener('DOMContentLoaded',setupToolPanels);
+</script>
 </body>
 </html>
