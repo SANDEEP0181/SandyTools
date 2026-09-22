@@ -243,7 +243,7 @@ function addNewToolsSection(){}
 document.addEventListener("DOMContentLoaded",addNewToolsSection);
 
 /* SandyTools — Image & Video editing tools */
-async async function removeImageBackground(){
+async function removeImageBackground(){
 let file=document.getElementById("bgRemoveFile")?.files[0],result=document.getElementById("bgRemoveResult");
 if(!file){result.innerText="Select an image first.";return;}
 result.innerText="Loading background-removal model… first run can take longer.";
