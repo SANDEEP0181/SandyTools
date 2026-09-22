@@ -42,6 +42,10 @@ function setup(){
     imageCompressor:'<input type="file" id="compressImage" accept="image/*"><label>Quality: <span id="qualityValue">70</span>%</label><input type="range" id="compressQuality" min="10" max="100" value="70"><button type="button" onclick="compressImageFile()">Compress Image</button><div id="compressResult" class="result">Select an image first.</div>',
     imageResizer:'<input type="file" id="resizeImage" accept="image/*"><input type="number" id="resizeWidth" placeholder="Width in pixels"><input type="number" id="resizeHeight" placeholder="Height in pixels"><label><input type="checkbox" id="keepRatio" checked> Keep ratio</label><button type="button" onclick="resizeImageFile()">Resize Image</button><div id="resizeResult" class="result">Select an image first.</div>',
     qrGenerator:'<input type="text" id="qrText" placeholder="Enter text or website URL"><button type="button" onclick="generateQR()">Generate QR Code</button><div id="qrResult" class="result">Enter text or URL first.</div>',
+    aiPrompt:'<input id="aiPromptTask" placeholder="What do you want AI to do?"><input id="aiPromptRole" placeholder="Optional role, e.g. teacher or developer"><input id="aiPromptFormat" placeholder="Optional output format"><button type="button" onclick="buildAIPrompt()">Build Prompt</button><div id="aiPromptResult" class="result"></div>',
+    aiIdeas:'<input id="aiIdeasTopic" placeholder="Topic or niche"><input id="aiIdeasAudience" placeholder="Target audience"><button type="button" onclick="buildAIIdeas()">Generate Ideas Prompt</button><div id="aiIdeasResult" class="result"></div>',
+    aiScript:'<input id="aiScriptTopic" placeholder="Video topic"><input id="aiScriptDuration" placeholder="Duration, e.g. 5 minutes"><input id="aiScriptStyle" placeholder="Style, e.g. Hindi comedy"><button type="button" onclick="buildAIScriptPrompt()">Build Script Prompt</button><div id="aiScriptResult" class="result"></div>',
+    aiEmail:'<input id="aiEmailPurpose" placeholder="Email purpose"><input id="aiEmailTone" placeholder="Tone, e.g. professional"><button type="button" onclick="buildAIEmailPrompt()">Build Email Prompt</button><div id="aiEmailResult" class="result"></div>',
     pdfMerger:'<input type="file" id="pdfFiles" accept=".pdf,application/pdf" multiple><button type="button" onclick="mergePDFs()">Merge PDF Files</button><div id="pdfResult" class="result">Select two or more PDF files.</div>'
   };
   document.querySelectorAll(".tool-panel").forEach(function(p){if(templates[p.id])p.innerHTML=templates[p.id];});
@@ -83,6 +87,27 @@ window.makePassportPhoto=function(){imageFromFile("passportFile",function(img){i
 window.downloadFormattedJSON=function(){if(!window.sandyJSON){return;}downloadBlob(new Blob([window.sandyJSON],{type:"application/json"}),"SandyTools-formatted.json");};
 window.formatJSON=function(){var t=$("jsonInput").value.trim();if(!t){result("jsonResult","Paste JSON first.");return;}try{var pretty=JSON.stringify(JSON.parse(t),null,2);window.sandyJSON=pretty;$("jsonResult").innerHTML="<pre style='white-space:pre-wrap;word-break:break-word'>"+pretty.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")+"</pre><button type='button' onclick='copyToolText(sandyJSON)'>Copy</button><button type='button' onclick='downloadFormattedJSON()'>Download JSON</button>";}catch(e){result("jsonResult","Invalid JSON: "+e.message);}};
 
+window.buildAIPrompt=function(){
+  var task=$("aiPromptTask").value.trim(),role=$("aiPromptRole").value.trim(),format=$("aiPromptFormat").value.trim();
+  if(!task){result("aiPromptResult","Enter the AI task first.");return;}
+  var p="Act as a helpful expert"+(role?" in the role of "+role:"")+". Task: "+task+". Provide accurate, clear and practical output."+(format?" Format the answer as: "+format+".":"");
+  result("aiPromptResult",p);
+};
+window.buildAIIdeas=function(){
+  var topic=$("aiIdeasTopic").value.trim(),aud=$("aiIdeasAudience").value.trim();
+  if(!topic){result("aiIdeasResult","Enter a topic first.");return;}
+  result("aiIdeasResult","Generate 20 original content ideas about "+topic+(aud?" for "+aud:"" )+". For each idea give a title, hook, short concept and suggested format. Avoid duplicates and clickbait claims.");
+};
+window.buildAIScriptPrompt=function(){
+  var topic=$("aiScriptTopic").value.trim(),dur=$("aiScriptDuration").value.trim(),style=$("aiScriptStyle").value.trim();
+  if(!topic){result("aiScriptResult","Enter a video topic first.");return;}
+  result("aiScriptResult","Write a complete YouTube video script about "+topic+(dur?" with an approximate duration of "+dur:"")+(style?" in a "+style+" style":"")+". Include a strong opening hook, clear sections, natural narration, useful details and a concise ending.");
+};
+window.buildAIEmailPrompt=function(){
+  var purpose=$("aiEmailPurpose").value.trim(),tone=$("aiEmailTone").value.trim();
+  if(!purpose){result("aiEmailResult","Enter the email purpose first.");return;}
+  result("aiEmailResult","Write a concise professional email for this purpose: "+purpose+(tone?". Use a "+tone+" tone":". Use a polite professional tone")+". Include a clear subject line, greeting, main message, requested action if needed, and closing.");
+};
 window.openExistingTool=function(id){window.openTool(id);};
 
 document.addEventListener("DOMContentLoaded",function(){
