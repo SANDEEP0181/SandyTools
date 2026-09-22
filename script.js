@@ -45,7 +45,10 @@ function setup(){
     aiPrompt:'<input id="aiPromptTask" placeholder="What do you want AI to do?"><input id="aiPromptRole" placeholder="Optional role, e.g. teacher or developer"><input id="aiPromptFormat" placeholder="Optional output format"><button type="button" onclick="buildAIPrompt()">Build Prompt</button><div id="aiPromptResult" class="result"></div>',
     aiIdeas:'<input id="aiIdeasTopic" placeholder="Topic or niche"><input id="aiIdeasAudience" placeholder="Target audience"><button type="button" onclick="buildAIIdeas()">Generate Ideas Prompt</button><div id="aiIdeasResult" class="result"></div>',
     aiScript:'<input id="aiScriptTopic" placeholder="Video topic"><input id="aiScriptDuration" placeholder="Duration, e.g. 5 minutes"><input id="aiScriptStyle" placeholder="Style, e.g. Hindi comedy"><button type="button" onclick="buildAIScriptPrompt()">Build Script Prompt</button><div id="aiScriptResult" class="result"></div>',
-        aiImagePrompt:'<input id="aiImageSubject" placeholder="Subject / scene"><input id="aiImageStyle" placeholder="Style, e.g. cinematic or anime"><input id="aiImageBackground" placeholder="Background"><input id="aiImageLighting" placeholder="Lighting"><select id="aiImageRatio"><option value="1:1">1:1 Square</option><option value="16:9">16:9 Landscape</option><option value="9:16">9:16 Portrait</option><option value="4:5">4:5 Portrait</option></select><input id="aiImageNegative" placeholder="Negative prompt (optional)"><button type="button" onclick="buildAIImagePrompt()">Generate Image Prompt</button><div id="aiImagePromptResult" class="result"></div>',
+            aiThumb:'<input id="aiThumbTopic" placeholder="Video topic"><input id="aiThumbText" placeholder="Thumbnail text (optional)"><input id="aiThumbStyle" placeholder="Style, e.g. bold cinematic"><input id="aiThumbAudience" placeholder="Target audience"><button type="button" onclick="buildAIThumbPrompt()">Generate Thumbnail Prompt</button><div id="aiThumbResult" class="result"></div>',
+    aiProduct:'<input id="aiProductName" placeholder="Product name"><input id="aiProductFeatures" placeholder="Key features"><input id="aiProductAudience" placeholder="Target customer"><input id="aiProductTone" placeholder="Tone, e.g. premium"><button type="button" onclick="buildAIProductPrompt()">Generate Product Prompt</button><div id="aiProductResult" class="result"></div>',
+    aiKeyword:'<input id="aiKeywordTopic" placeholder="Topic or niche"><input id="aiKeywordPlatform" placeholder="Platform, e.g. YouTube or Google"><input id="aiKeywordAudience" placeholder="Target audience"><button type="button" onclick="buildAIKeywordPrompt()">Generate Keywords Prompt</button><div id="aiKeywordResult" class="result"></div>',
+aiImagePrompt:'<input id="aiImageSubject" placeholder="Subject / scene"><input id="aiImageStyle" placeholder="Style, e.g. cinematic or anime"><input id="aiImageBackground" placeholder="Background"><input id="aiImageLighting" placeholder="Lighting"><select id="aiImageRatio"><option value="1:1">1:1 Square</option><option value="16:9">16:9 Landscape</option><option value="9:16">9:16 Portrait</option><option value="4:5">4:5 Portrait</option></select><input id="aiImageNegative" placeholder="Negative prompt (optional)"><button type="button" onclick="buildAIImagePrompt()">Generate Image Prompt</button><div id="aiImagePromptResult" class="result"></div>',
 aiEmail:'<input id="aiEmailPurpose" placeholder="Email purpose"><input id="aiEmailTone" placeholder="Tone, e.g. professional"><button type="button" onclick="buildAIEmailPrompt()">Build Email Prompt</button><div id="aiEmailResult" class="result"></div>',
     pdfMerger:'<input type="file" id="pdfFiles" accept=".pdf,application/pdf" multiple><button type="button" onclick="mergePDFs()">Merge PDF Files</button><div id="pdfResult" class="result">Select two or more PDF files.</div>'
   };
@@ -108,6 +111,21 @@ window.buildAIEmailPrompt=function(){
   var purpose=$("aiEmailPurpose").value.trim(),tone=$("aiEmailTone").value.trim();
   if(!purpose){result("aiEmailResult","Enter the email purpose first.");return;}
   result("aiEmailResult","Write a concise professional email for this purpose: "+purpose+(tone?". Use a "+tone+" tone":". Use a polite professional tone")+". Include a clear subject line, greeting, main message, requested action if needed, and closing.");
+};
+window.buildAIThumbPrompt=function(){
+  var topic=$("aiThumbTopic").value.trim(),txt=$("aiThumbText").value.trim(),style=$("aiThumbStyle").value.trim(),aud=$("aiThumbAudience").value.trim();
+  if(!topic){result("aiThumbResult","Enter a video topic first.");return;}
+  result("aiThumbResult","Create a high-click YouTube thumbnail concept for "+topic+"."+(txt?" Include short readable text: "+txt+".":"")+(style?" Use a "+style+" visual style.":"")+(aud?" Make it appealing to "+aud+".":"")+" Use one clear focal subject, strong visual contrast, simple composition, expressive emotion, mobile-friendly readability and no misleading imagery.");
+};
+window.buildAIProductPrompt=function(){
+  var name=$("aiProductName").value.trim(),features=$("aiProductFeatures").value.trim(),aud=$("aiProductAudience").value.trim(),tone=$("aiProductTone").value.trim();
+  if(!name){result("aiProductResult","Enter a product name first.");return;}
+  result("aiProductResult","Write a clear product description for "+name+"."+(features?" Key features: "+features+".":"")+(aud?" Target customer: "+aud+".":"")+(tone?" Use a "+tone+" tone.":" Use a clear, trustworthy tone.")+" Include benefits, key features, practical use cases and a concise call to action. Avoid unsupported claims.");
+};
+window.buildAIKeywordPrompt=function(){
+  var topic=$("aiKeywordTopic").value.trim(),platform=$("aiKeywordPlatform").value.trim(),aud=$("aiKeywordAudience").value.trim();
+  if(!topic){result("aiKeywordResult","Enter a topic or niche first.");return;}
+  result("aiKeywordResult","Generate a useful keyword and hashtag research list for "+topic+(platform?" on "+platform:"")+(aud?" targeting "+aud:"")+". Group results by primary keywords, long-tail keywords, related phrases and relevant hashtags. Add search intent and avoid spammy or irrelevant terms.");
 };
 window.buildAIImagePrompt=function(){
   var subject=$("aiImageSubject").value.trim(),style=$("aiImageStyle").value.trim(),bg=$("aiImageBackground").value.trim(),light=$("aiImageLighting").value.trim(),ratio=$("aiImageRatio").value,negative=$("aiImageNegative").value.trim();
