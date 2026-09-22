@@ -110,7 +110,7 @@
 function showTool(id){var panel=document.getElementById(id);if(!panel)return false;document.querySelectorAll(".tool-panel").forEach(function(p){p.style.display=(p===panel?"block":"none");});var box=panel.closest(".tool-box");if(box)box.classList.add("tool-open");return true;}
 window.openTool=window.openTool||showTool;
 window.openExistingTool=function(id){if(showTool(id)){var panel=document.getElementById(id),box=panel&&panel.closest(".tool-box");if(box)box.scrollIntoView({behavior:"smooth",block:"center"});}};
-function initFallback(){document.querySelectorAll("[data-tool-open]").forEach(function(btn){if(btn.dataset.sandyBound==="1")return;btn.dataset.sandyBound="1";btn.type="button";btn.addEventListener("click",function(){var id=this.getAttribute("data-tool-open");if(!id)return;if(!showTool(id)&&typeof window.openTool==="function")window.openTool(id);var panel=document.getElementById(id),box=panel&&panel.closest(".tool-box");if(box)box.scrollIntoView({behavior:"smooth",block:"center"});});});if(typeof window.setupToolPanels==="function")window.setupToolPanels();}
+function initFallback(){document.querySelectorAll("[data-tool-open]").forEach(function(btn){if(btn.dataset.sandyBound==="1")return;btn.dataset.sandyBound="1";btn.type="button";btn.addEventListener("click",function(){var id=this.getAttribute("data-tool-open");if(!id)return;if(typeof window.openTool==="function")window.openTool(id);var panel=document.getElementById(id),box=panel&&panel.closest(".tool-box");if(box)box.scrollIntoView({behavior:"smooth",block:"center"});});});if(typeof window.setupToolPanels==="function")window.setupToolPanels();}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initFallback);else initFallback();
 })();
 </script>
