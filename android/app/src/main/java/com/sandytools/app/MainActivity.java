@@ -40,7 +40,9 @@ public class MainActivity extends Activity {
         settings.setAllowContentAccess(true);
         settings.setBuiltInZoomControls(false);
         settings.setDisplayZoomControls(false);
-        settings.setMediaPlaybackRequiresUserGesture(true);\n        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);\n        settings.setJavaScriptCanOpenWindowsAutomatically(false);
+        settings.setMediaPlaybackRequiresUserGesture(true);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        settings.setJavaScriptCanOpenWindowsAutomatically(false);
 
         CookieManager.getInstance().setAcceptCookie(true);
 
