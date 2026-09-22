@@ -45,6 +45,7 @@
 <div class="app-meta"><strong>Latest version:</strong> <span id="apkVersion">Checking latest release…</span></div>
 <div class="app-actions">
 <a id="apkDownloadButton" class="app-button primary apk-download-main" href="https://github.com/SANDEEP0181/SandyTools/releases/latest/download/app-debug.apk" target="_self">Download APK</a>
+<button type="button" id="apkShareButton" class="app-button secondary apk-share-main">Share App</button>
 </div>
 <small id="apkStatus" class="app-status">The download button opens the latest published GitHub Release.</small>
 </div>
@@ -103,7 +104,7 @@
 <details class="seo-details"><summary>About SandyTools</summary><p>SandyTools brings practical calculators, text utilities, image processing, QR generation, PDF merging and creator tools together in one simple interface.</p><h3>Are SandyTools tools free?</h3><p>Yes. SandyTools is designed to provide these online utilities without requiring paid software.</p><h3>Can I use SandyTools on mobile?</h3><p>Yes. The interface is responsive and designed for modern phones and desktop browsers.</p><h3>Should I verify calculator results?</h3><p>For important financial or business decisions, treat calculator results as estimates and verify them with the relevant official or professional source.</p></details>
 </main>
 <footer><div class="wrap"><strong>SandyTools</strong><p>© 2026 SandyTools · <a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p></div></footer>
-<script src="script.js?v=1.0.6"></script>
+<script src="script.js?v=1.0.7"></script>
 <script>
 (function(){
 function showTool(id){var panel=document.getElementById(id);if(!panel)return false;document.querySelectorAll(".tool-panel").forEach(function(p){p.style.display=(p===panel?"block":"none");});var box=panel.closest(".tool-box");if(box)box.classList.add("tool-open");return true;}
@@ -126,6 +127,13 @@ fetch("https://api.github.com/repos/SANDEEP0181/SandyTools/releases/latest")
   if(versionEl)versionEl.textContent=data.tag_name||data.name||"Latest";
   if(statusEl)statusEl.textContent="Latest published release: "+(data.name||data.tag_name||"Available");
   if(downloadBtn){const apk=(data.assets||[]).find(a=>/\.apk$/i.test(a.name));downloadBtn.href=apk&&apk.browser_download_url?apk.browser_download_url:"https://github.com/SANDEEP0181/SandyTools/releases/latest/download/app-debug.apk";downloadBtn.target="_self";}
+  const shareBtn=document.getElementById("apkShareButton");
+  if(shareBtn)shareBtn.onclick=function(){
+    const shareData={title:"SandyTools Android App",text:"Download the latest SandyTools APK",url:downloadBtn?downloadBtn.href:"https://github.com/SANDEEP0181/SandyTools/releases/latest/download/app-debug.apk"};
+    if(navigator.share){navigator.share(shareData).catch(function(){});}
+    else if(navigator.clipboard){navigator.clipboard.writeText(shareData.url).then(function(){shareBtn.textContent="Link Copied";setTimeout(function(){shareBtn.textContent="Share App";},1800);}).catch(function(){});}
+    else {window.open(shareData.url,"_blank");}
+  };
 })
 .catch(()=>{
   if(versionEl)versionEl.textContent="Latest published release";
