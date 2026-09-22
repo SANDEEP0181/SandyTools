@@ -126,7 +126,7 @@ fetch("https://api.github.com/repos/SANDEEP0181/SandyTools/releases/latest")
 .then(data=>{
   if(versionEl)versionEl.textContent=data.tag_name||data.name||"Latest";
   if(statusEl)statusEl.textContent="Latest published release: "+(data.name||data.tag_name||"Available");
-  if(downloadBtn)downloadBtn.href=data.html_url||latestUrl;
+  if(downloadBtn){const apk=(data.assets||[]).find(a=>/\.apk$/i.test(a.name));downloadBtn.href=apk&&apk.browser_download_url?apk.browser_download_url:(data.html_url||latestUrl);downloadBtn.target="_self";}
 })
 .catch(()=>{
   if(versionEl)versionEl.textContent="Latest published release";
