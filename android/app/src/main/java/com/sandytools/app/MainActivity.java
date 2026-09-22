@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import androidx.core.splashscreen.SplashScreen;
 
 public class MainActivity extends Activity {
-    private static final String HOME_URL = "https://sandeep0181.github.io/SandyTools/?app=android&v=1.0.2";
+    private static final String HOME_URL = "https://sandeep0181.github.io/SandyTools/?app=android&v=1.0.3";
     private static final int FILE_CHOOSER_REQUEST = 1001;
 
     private WebView webView;
