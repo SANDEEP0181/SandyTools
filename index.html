@@ -44,8 +44,7 @@
 <p>Use SandyTools on Android with the latest official APK release.</p>
 <div class="app-meta"><strong>Latest version:</strong> <span id="apkVersion">Checking latest release…</span></div>
 <div class="app-actions">
-<a id="apkDownloadButton" class="app-button primary" href="https://github.com/SANDEEP0181/SandyTools/releases/latest" target="_blank" rel="noopener">Download APK</a>
-<button type="button" id="apkShareButton" class="app-button secondary">Share App</button>
+<a id="apkDownloadButton" class="app-button primary apk-download-main" href="https://github.com/SANDEEP0181/SandyTools/releases/latest/download/app-debug.apk" target="_self">Download APK</a>
 </div>
 <small id="apkStatus" class="app-status">The download button opens the latest published GitHub Release.</small>
 </div>
@@ -126,22 +125,12 @@ fetch("https://api.github.com/repos/SANDEEP0181/SandyTools/releases/latest")
 .then(data=>{
   if(versionEl)versionEl.textContent=data.tag_name||data.name||"Latest";
   if(statusEl)statusEl.textContent="Latest published release: "+(data.name||data.tag_name||"Available");
-  if(downloadBtn){const apk=(data.assets||[]).find(a=>/\.apk$/i.test(a.name));downloadBtn.href=apk&&apk.browser_download_url?apk.browser_download_url:(data.html_url||latestUrl);downloadBtn.target="_self";}
+  if(downloadBtn){const apk=(data.assets||[]).find(a=>/\.apk$/i.test(a.name));downloadBtn.href=apk&&apk.browser_download_url?apk.browser_download_url:"https://github.com/SANDEEP0181/SandyTools/releases/latest/download/app-debug.apk";downloadBtn.target="_self";}
 })
 .catch(()=>{
   if(versionEl)versionEl.textContent="Latest published release";
   if(statusEl)statusEl.textContent="Open the latest GitHub Release to download the current APK.";
 });
-if(shareBtn){
- shareBtn.addEventListener("click",async function(){
-   const shareData={title:"SandyTools Android App",text:"Download the latest SandyTools APK",url:latestUrl};
-   try{
-     if(navigator.share){await navigator.share(shareData);}
-     else if(navigator.clipboard){await navigator.clipboard.writeText(latestUrl);shareBtn.textContent="Link Copied";setTimeout(()=>shareBtn.textContent="Share App",1800);}
-     else window.open(latestUrl,"_blank");
-   }catch(e){}
- });
-}
 })();
 </script>
 </body>
