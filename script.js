@@ -239,9 +239,6 @@ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.write
 else fallbackCopy(text);
 }
 function fallbackCopy(text){let t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();alert("Copied to clipboard.");}
-function addNewToolsSection(){}
-document.addEventListener("DOMContentLoaded",addNewToolsSection);
-
 /* SandyTools — Image & Video editing tools */
 async function removeImageBackground(){
 let file=document.getElementById("bgRemoveFile")?.files[0],result=document.getElementById("bgRemoveResult");
@@ -334,7 +331,8 @@ sec.innerHTML='<div class="section-heading"><div><span class="section-kicker">07
 '<div class="tool-box" data-name="image converter jpg png webp convert image editing"><div class="tool-icon">IMG</div><div class="tool-info"><h3>Image Converter</h3><p>Convert images to JPG, PNG or WebP.</p><button onclick="openTool(\'imageConverter\')">Open</button></div><div id="imageConverter" class="tool-panel"><input type="file" id="convertImageFile" accept="image/*"><select id="convertImageType"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select><button onclick="convertImageFile()">Convert Image</button><div id="convertImageResult" class="result">Select an image first.</div></div></div>'+
 '<div class="tool-box" data-name="video compressor compress video editing"><div class="tool-icon">VID</div><div class="tool-info"><h3>Video Compressor</h3><p>Reduce video resolution and bitrate in your browser.</p><button onclick="openTool(\'videoCompressor\')">Open</button></div><div id="videoCompressor" class="tool-panel"><input type="file" id="compressVideoFile" accept="video/*"><button onclick="compressVideoBrowser()">Compress Video</button><div id="compressVideoResult" class="result">Select a video first.</div></div></div>'+
 '<div class="tool-box" data-name="video trimmer trim video editing"><div class="tool-icon">CUT</div><div class="tool-info"><h3>Video Trimmer</h3><p>Cut the start and end of a video quickly.</p><button onclick="openTool(\'videoTrimmer\')">Open</button></div><div id="videoTrimmer" class="tool-panel"><input type="file" id="trimVideoFile" accept="video/*"><input type="number" id="trimStart" min="0" step="0.1" placeholder="Start seconds"><input type="number" id="trimEnd" min="0" step="0.1" placeholder="End seconds"><button onclick="trimVideoBrowser()">Trim Video</button><div id="trimVideoResult" class="result">Select a video first.</div></div></div>'+
-'</div>';const anchor=document.querySelector(".compact-info") || document.querySelector(".seo-details") || null;\nif(anchor) main.insertBefore(sec,anchor); else main.appendChild(sec);
+'</div>';const anchor=document.querySelector(".compact-info") || document.querySelector(".seo-details") || null;
+if(anchor) main.insertBefore(sec,anchor); else main.appendChild(sec);
 }
 function convertImageFile(){
 let file=document.getElementById("convertImageFile")?.files[0],type=document.getElementById("convertImageType")?.value,result=document.getElementById("convertImageResult");
@@ -347,3 +345,36 @@ canvas.toBlob(function(blob){if(!blob){result.innerText="Conversion failed.";ret
 };img.src=e.target.result;};reader.readAsDataURL(file);
 }
 document.addEventListener("DOMContentLoaded",addMediaToolsSection);
+
+
+function setupToolPanels(){
+const templates={
+percentage:'<input id="percentValue" type="number" placeholder="Value"><input id="percentTotal" type="number" placeholder="Total"><button type="button" onclick="calculatePercentage()">Calculate</button><div id="percentResult" class="result"></div>',
+age:'<input id="birthDate" type="date"><button type="button" onclick="calculateAge()">Calculate Age</button><div id="ageResult" class="result"></div>',
+emi:'<input id="loanAmount" type="number" placeholder="Loan Amount"><input id="interestRate" type="number" placeholder="Annual Interest %"><input id="loanYears" type="number" placeholder="Loan Years"><button type="button" onclick="calculateEMI()">Calculate EMI</button><div id="emiResult" class="result"></div>',
+gst:'<input id="gstAmount" type="number" placeholder="Amount"><input id="gstRate" type="number" placeholder="GST %"><button type="button" onclick="calculateGST()">Calculate GST</button><div id="gstResult" class="result"></div>',
+sip:'<input id="sipMonthly" type="number" placeholder="Monthly Investment"><input id="sipRate" type="number" placeholder="Expected Return %"><input id="sipYears" type="number" placeholder="Years"><button type="button" onclick="calculateSIP()">Calculate SIP</button><div id="sipResult" class="result"></div>',
+discount:'<input id="discountPrice" type="number" placeholder="Original Price"><input id="discountRate" type="number" placeholder="Discount %"><button type="button" onclick="calculateDiscount()">Calculate Discount</button><div id="discountResult" class="result"></div>',
+title:'<input id="titleTopic" placeholder="Enter video topic"><button type="button" onclick="generateTitle()">Generate Title</button><div id="titleResult" class="result"></div>',
+description:'<input id="descriptionTopic" placeholder="Enter video topic"><button type="button" onclick="generateDescription()">Generate Description</button><div id="descriptionResult" class="result"></div>',
+hashtags:'<input id="hashtagTopic" placeholder="Enter topic"><button type="button" onclick="generateHashtags()">Generate Hashtags</button><div id="hashtagResult" class="result"></div>',
+words:'<textarea id="wordText" rows="4" placeholder="Type or paste text"></textarea><button type="button" onclick="countWords()">Count Words</button><div id="wordResult" class="result"></div>',
+characters:'<textarea id="characterText" rows="4" placeholder="Type or paste text"></textarea><button type="button" onclick="countCharacters()">Count Characters</button><div id="characterResult" class="result"></div>',
+case:'<textarea id="caseText" rows="4" placeholder="Enter text"></textarea><button type="button" onclick="toUpperCaseText()">UPPERCASE</button><button type="button" onclick="toLowerCaseText()">lowercase</button><div id="caseResult" class="result"></div>',
+date:'<input id="dateOne" type="date"><input id="dateTwo" type="date"><button type="button" onclick="dateDifference()">Calculate Difference</button><div id="dateResult" class="result"></div>',
+time:'<input id="timeOne" type="time"><input id="timeTwo" type="time"><button type="button" onclick="calculateTime()">Calculate Difference</button><div id="timeResult" class="result"></div>',
+unit:'<input id="unitValue" type="number" placeholder="Enter value"><select id="unitType"><option value="kmm">Kilometers to Miles</option><option value="mikm">Miles to Kilometers</option><option value="kgp">Kilograms to Pounds</option><option value="lbkg">Pounds to Kilograms</option><option value="cmft">Centimeters to Feet</option><option value="ftcm">Feet to Centimeters</option></select><button type="button" onclick="convertUnit()">Convert</button><div id="unitResult" class="result"></div>',
+password:'<input id="passwordLength" type="number" value="16" min="4" max="100"><button type="button" onclick="generatePassword()">Generate Password</button><div id="passwordResult" class="result"></div>',
+imageCompressor:'<input type="file" id="compressImage" accept="image/*"><label>Quality: <span id="qualityValue">70</span>%</label><input type="range" id="compressQuality" min="10" max="100" value="70"><button type="button" onclick="compressImageFile()">Compress Image</button><div id="compressResult" class="result">Select an image first.</div>',
+imageResizer:'<input type="file" id="resizeImage" accept="image/*"><input type="number" id="resizeWidth" placeholder="Width in pixels"><input type="number" id="resizeHeight" placeholder="Height in pixels"><label><input type="checkbox" id="keepRatio" checked> Keep ratio</label><button type="button" onclick="resizeImageFile()">Resize Image</button><div id="resizeResult" class="result">Select an image first.</div>',
+qrGenerator:'<input type="text" id="qrText" placeholder="Enter text or website URL"><button type="button" onclick="generateQR()">Generate QR Code</button><div id="qrResult" class="result">Enter text or URL first.</div>',
+pdfMerger:'<input type="file" id="pdfFiles" accept=".pdf,application/pdf" multiple><button type="button" onclick="mergePDFs()">Merge PDF Files</button><div id="pdfResult" class="result">Select two or more PDF files.</div>'
+};
+document.querySelectorAll(".tool-panel").forEach(function(panel){
+const id=panel.id;
+if(templates[id])panel.innerHTML=templates[id];
+});
+const q=document.getElementById("compressQuality");
+if(q)q.addEventListener("input",function(){const v=document.getElementById("qualityValue");if(v)v.textContent=this.value;});
+}
+
