@@ -121,3 +121,16 @@ document.addEventListener("DOMContentLoaded",function(){
   });
 });
 })();
+
+window.downloadAIOutput=function(id,filename){
+  var el=document.getElementById(id);
+  if(!el)return;
+  var text=el.textContent||"";
+  if(!text.trim())return;
+  var blob=new Blob([text],{type:"text/plain;charset=utf-8"});
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=filename||"SandyTools-AI-Output.txt";
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+};
