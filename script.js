@@ -45,7 +45,8 @@ function setup(){
     aiPrompt:'<input id="aiPromptTask" placeholder="What do you want AI to do?"><input id="aiPromptRole" placeholder="Optional role, e.g. teacher or developer"><input id="aiPromptFormat" placeholder="Optional output format"><button type="button" onclick="buildAIPrompt()">Build Prompt</button><div id="aiPromptResult" class="result"></div>',
     aiIdeas:'<input id="aiIdeasTopic" placeholder="Topic or niche"><input id="aiIdeasAudience" placeholder="Target audience"><button type="button" onclick="buildAIIdeas()">Generate Ideas Prompt</button><div id="aiIdeasResult" class="result"></div>',
     aiScript:'<input id="aiScriptTopic" placeholder="Video topic"><input id="aiScriptDuration" placeholder="Duration, e.g. 5 minutes"><input id="aiScriptStyle" placeholder="Style, e.g. Hindi comedy"><button type="button" onclick="buildAIScriptPrompt()">Build Script Prompt</button><div id="aiScriptResult" class="result"></div>',
-    aiEmail:'<input id="aiEmailPurpose" placeholder="Email purpose"><input id="aiEmailTone" placeholder="Tone, e.g. professional"><button type="button" onclick="buildAIEmailPrompt()">Build Email Prompt</button><div id="aiEmailResult" class="result"></div>',
+        aiImagePrompt:'<input id="aiImageSubject" placeholder="Subject / scene"><input id="aiImageStyle" placeholder="Style, e.g. cinematic or anime"><input id="aiImageBackground" placeholder="Background"><input id="aiImageLighting" placeholder="Lighting"><select id="aiImageRatio"><option value="1:1">1:1 Square</option><option value="16:9">16:9 Landscape</option><option value="9:16">9:16 Portrait</option><option value="4:5">4:5 Portrait</option></select><input id="aiImageNegative" placeholder="Negative prompt (optional)"><button type="button" onclick="buildAIImagePrompt()">Generate Image Prompt</button><div id="aiImagePromptResult" class="result"></div>',
+aiEmail:'<input id="aiEmailPurpose" placeholder="Email purpose"><input id="aiEmailTone" placeholder="Tone, e.g. professional"><button type="button" onclick="buildAIEmailPrompt()">Build Email Prompt</button><div id="aiEmailResult" class="result"></div>',
     pdfMerger:'<input type="file" id="pdfFiles" accept=".pdf,application/pdf" multiple><button type="button" onclick="mergePDFs()">Merge PDF Files</button><div id="pdfResult" class="result">Select two or more PDF files.</div>'
   };
   document.querySelectorAll(".tool-panel").forEach(function(p){if(templates[p.id])p.innerHTML=templates[p.id];});
@@ -107,6 +108,12 @@ window.buildAIEmailPrompt=function(){
   var purpose=$("aiEmailPurpose").value.trim(),tone=$("aiEmailTone").value.trim();
   if(!purpose){result("aiEmailResult","Enter the email purpose first.");return;}
   result("aiEmailResult","Write a concise professional email for this purpose: "+purpose+(tone?". Use a "+tone+" tone":". Use a polite professional tone")+". Include a clear subject line, greeting, main message, requested action if needed, and closing.");
+};
+window.buildAIImagePrompt=function(){
+  var subject=$("aiImageSubject").value.trim(),style=$("aiImageStyle").value.trim(),bg=$("aiImageBackground").value.trim(),light=$("aiImageLighting").value.trim(),ratio=$("aiImageRatio").value,negative=$("aiImageNegative").value.trim();
+  if(!subject){result("aiImagePromptResult","Enter a subject or scene first.");return;}
+  var p="Create a high-quality image of "+subject+"."+(style?" Style: "+style+".":"")+(bg?" Background: "+bg+".":"")+(light?" Lighting: "+light+".":"")+" Composition: clear subject, strong details, balanced framing, professional visual quality. Aspect ratio: "+ratio+"."+(negative?" Negative prompt: "+negative+".":"");
+  result("aiImagePromptResult",p);
 };
 window.buildAICaptionPrompt=function(){
   var topic=$("aiCaptionTopic").value.trim(),platform=$("aiCaptionPlatform").value.trim(),tone=$("aiCaptionTone").value.trim();
