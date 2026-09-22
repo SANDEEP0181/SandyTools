@@ -108,6 +108,17 @@ window.buildAIEmailPrompt=function(){
   if(!purpose){result("aiEmailResult","Enter the email purpose first.");return;}
   result("aiEmailResult","Write a concise professional email for this purpose: "+purpose+(tone?". Use a "+tone+" tone":". Use a polite professional tone")+". Include a clear subject line, greeting, main message, requested action if needed, and closing.");
 };
+window.buildAICaptionPrompt=function(){
+  var topic=$("aiCaptionTopic").value.trim(),platform=$("aiCaptionPlatform").value.trim(),tone=$("aiCaptionTone").value.trim();
+  if(!topic){result("aiCaptionResult","Enter a topic first.");return;}
+  result("aiCaptionResult","Create 10 original social media captions about "+topic+(platform?" for "+platform:"")+(tone?". Use a "+tone+" tone.":"")+". Include a strong hook, natural language, relevant hashtags and a clear call to action. Avoid misleading claims.");
+};
+window.buildAISEOPrompt=function(){
+  var topic=$("aiSEOTopic").value.trim(),keyword=$("aiSEOKeyword").value.trim(),aud=$("aiSEOAudience").value.trim();
+  if(!topic){result("aiSEOResult","Enter a topic first.");return;}
+  result("aiSEOResult","Create an SEO-friendly article plan about "+topic+(keyword?" targeting the keyword '"+keyword+"'":"")+(aud?" for "+aud:"")+". Provide search intent, title options, meta description, H2/H3 outline, FAQ ideas and natural keyword placement. Keep the content useful and original.");
+};
+
 window.openExistingTool=function(id){window.openTool(id);};
 
 document.addEventListener("DOMContentLoaded",function(){
