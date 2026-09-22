@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import androidx.core.splashscreen.SplashScreen;
 
 public class MainActivity extends Activity {
-    private static final String HOME_URL = "https://sandeep0181.github.io/SandyTools/?app=android&v=1.0.3";
+    private static final String HOME_URL = "https://sandeep0181.github.io/SandyTools/?app=android&v=1.0.4";
     private static final int FILE_CHOOSER_REQUEST = 1001;
 
     private WebView webView;
@@ -36,13 +36,15 @@ public class MainActivity extends Activity {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
+        settings.setDatabaseEnabled(true);
         settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
         settings.setBuiltInZoomControls(false);
         settings.setDisplayZoomControls(false);
         settings.setMediaPlaybackRequiresUserGesture(true);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        settings.setJavaScriptCanOpenWindowsAutomatically(false);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setSupportMultipleWindows(true);
 
         CookieManager.getInstance().setAcceptCookie(true);
 
@@ -64,6 +66,10 @@ public class MainActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 progress.setVisibility(View.GONE);
+
+                // Android WebView fallback: keep SandyTools Open buttons working even if the remote JS bundle is delayed.
+                String fallbackJs = "(function(){function sandyOpen(id){var p=document.getElementById(id);if(!p)return;document.querySelectorAll('.tool-panel').forEach(function(x){if(x!==p)x.style.display='none';});p.style.display=p.style.display==='block'?'none':'block';var b=p.closest('.tool-box');if(b)b.scrollIntoView({behavior:'smooth',block:'center'});}if(typeof window.openTool!=='function')window.openTool=sandyOpen;if(typeof window.openExistingTool!=='function')window.openExistingTool=sandyOpen;document.querySelectorAll('button[onclick*=\"openTool\"],button[onclick*=\"openExistingTool\"]').forEach(function(btn){if(btn.dataset.sandyAndroidBound)return;btn.dataset.sandyAndroidBound='1';btn.addEventListener('click',function(){var m=(btn.getAttribute('onclick')||'').match(/open(?:Existing)?Tool\\([\\'\\"]([^\\'\\"]+)[\\'\\"]\\)/);if(m)sandyOpen(m[1]);});});})();";
+                view.evaluateJavascript(fallbackJs, null);
             }
         });
 
