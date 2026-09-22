@@ -25,70 +25,56 @@
 <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
 <body>
-<header>
-<div class="wrap topbar">
+<header><div class="wrap topbar">
 <a class="brand" href="./" aria-label="SandyTools home"><span class="brand-mark">S</span><span><strong>SandyTools</strong><small>Free Online Tools</small></span></a>
 <nav class="site-nav" aria-label="Main navigation">
 <a href="./">Home</a><a href="calculator.html">Calculators</a><a href="qr-generator.html">QR</a><a href="image-tools.html">Images</a><a href="pdf-tools.html">PDF</a><a href="youtube-tools.html">YouTube</a>
-</nav>
-</div>
-</header>
-
+</nav></div></header>
 <main class="wrap">
 <section class="hero">
-<div class="hero-copy">
-<span class="eyebrow">SANDYTOOLS</span>
-<h1>Useful tools. <span>Simple.</span> Fast.</h1>
-<p>Calculators, text utilities, image tools, QR generation and PDF tools — organized in one clean workspace.</p>
+<div class="hero-copy"><span class="eyebrow">SANDYTOOLS</span><h1>Useful tools. <span>Simple.</span> Fast.</h1><p>Calculators, text utilities, image tools, QR generation and PDF tools — organized in one clean workspace.</p></div>
+<div class="search-wrap"><span aria-hidden="true">⌕</span><input id="searchTools" type="search" aria-label="Search tools" autocomplete="off" placeholder="Search tools..."></div>
+<div class="quick-links"><a href="#calculators">Calculators</a><a href="#text">Text</a><a href="#media">Image & QR</a><a href="#pdf">PDF</a><a href="#new-popular-tools">New Tools</a><a href="#ai-tools">AI Tools</a><a href="#app-download">APK</a><a href="youtube-tools.html">YouTube</a></div>
+</section>
+
+<section class="app-download-section" id="app-download">
+<div class="app-download-copy">
+<span class="section-kicker">APP</span>
+<h2>Get SandyTools App</h2>
+<p>Use SandyTools on Android with the latest official APK release.</p>
+<div class="app-meta"><strong>Latest version:</strong> <span id="apkVersion">Checking latest release…</span></div>
+<div class="app-actions">
+<a id="apkDownloadButton" class="app-button primary" href="https://github.com/SANDEEP0181/SandyTools/releases/latest" target="_blank" rel="noopener">Download APK</a>
+<button type="button" id="apkShareButton" class="app-button secondary">Share App</button>
 </div>
-<div class="search-wrap">
-<span aria-hidden="true">⌕</span>
-<input id="searchTools" type="search" aria-label="Search tools" autocomplete="off" placeholder="Search tools...">
+<small id="apkStatus" class="app-status">The download button opens the latest published GitHub Release.</small>
 </div>
-<div class="quick-links">
-<a href="#calculators">Calculators</a><a href="#text">Text</a><a href="#media">Image & QR</a><a href="#pdf">PDF</a><a href="#new-popular-tools">New Tools</a><a href="#ai-tools">AI Tools</a><a href="youtube-tools.html">YouTube</a>
-</div>
+<div class="app-icon-card"><div class="app-icon">S</div><strong>SandyTools</strong><span>Android App</span></div>
 </section>
 
 <section class="tool-section" id="calculators">
 <div class="section-heading"><div><span class="section-kicker">01</span><h2>Calculators</h2></div><p>Everyday calculations in a few taps.</p></div>
 <div class="tool-grid">
 <div class="tool-box" data-name="percentage calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>Percentage</h3><p>Calculate percentages quickly.</p><button type="button" data-tool-open="percentage">Open</button></div><div id="percentage" class="tool-panel"></div></div><div class="tool-box" data-name="age calculator calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>Age Calculator</h3><p>Calculate your age from a birth date.</p><button type="button" data-tool-open="age">Open</button></div><div id="age" class="tool-panel"></div></div><div class="tool-box" data-name="emi calculator calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>EMI Calculator</h3><p>Estimate monthly loan EMI.</p><button type="button" data-tool-open="emi">Open</button></div><div id="emi" class="tool-panel"></div></div><div class="tool-box" data-name="gst calculator calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>GST Calculator</h3><p>Calculate GST and total amount.</p><button type="button" data-tool-open="gst">Open</button></div><div id="gst" class="tool-panel"></div></div><div class="tool-box" data-name="sip calculator calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>SIP Calculator</h3><p>Estimate SIP investment value.</p><button type="button" data-tool-open="sip">Open</button></div><div id="sip" class="tool-panel"></div></div><div class="tool-box" data-name="discount calculator"><div class="tool-icon">%</div><div class="tool-info"><h3>Discount</h3><p>Calculate discount and final price.</p><button type="button" data-tool-open="discount">Open</button></div><div id="discount" class="tool-panel"></div></div>
-</div>
-</section>
+</div></section>
 
-<section class="tool-section" id="text">
-<div class="section-heading"><div><span class="section-kicker">02</span><h2>Text & Creator</h2></div><p>Quick tools for writing and content.</p></div>
-<div class="tool-grid">
-<div class="tool-box" data-name="youtube title generator"><div class="tool-icon">Aa</div><div class="tool-info"><h3>YouTube Title Generator</h3><p>Create video titles.</p><button type="button" data-tool-open="title">Open</button></div><div id="title" class="tool-panel"></div></div><div class="tool-box" data-name="youtube description generator"><div class="tool-icon">Aa</div><div class="tool-info"><h3>YouTube Description Generator</h3><p>Create video descriptions.</p><button type="button" data-tool-open="description">Open</button></div><div id="description" class="tool-panel"></div></div><div class="tool-box" data-name="hashtag generator"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Hashtag Generator</h3><p>Generate useful hashtags.</p><button type="button" data-tool-open="hashtags">Open</button></div><div id="hashtags" class="tool-panel"></div></div><div class="tool-box" data-name="word counter"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Word Counter</h3><p>Count words in text.</p><button type="button" data-tool-open="words">Open</button></div><div id="words" class="tool-panel"></div></div><div class="tool-box" data-name="character counter"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Character Counter</h3><p>Count characters.</p><button type="button" data-tool-open="characters">Open</button></div><div id="characters" class="tool-panel"></div></div><div class="tool-box" data-name="case converter"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Case Converter</h3><p>Convert text case.</p><button type="button" data-tool-open="case">Open</button></div><div id="case" class="tool-panel"></div></div>
-</div>
-</section>
+<section class="tool-section" id="text"><div class="section-heading"><div><span class="section-kicker">02</span><h2>Text & Creator</h2></div><p>Quick tools for writing and content.</p></div><div class="tool-grid">
+<div class="tool-box" data-name="youtube title generator"><div class="tool-icon">Aa</div><div class="tool-info"><h3>YouTube Title Generator</h3><p>Create video titles.</p><button type="button" data-tool-open="title">Open</button></div><div id="title" class="tool-panel"></div></div><div class="tool-box" data-name="youtube description generator"><div class="tool-icon">Aa</div><div class="tool-info"><h3>YouTube Description Generator</h3><p>Create video descriptions.</p><button type="button" data-tool-open="description">Open</button></div><div id="description" class="tool-panel"></div></div><div class="tool-box" data-name="hashtag generator"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Hashtag Generator</h3><p>Generate useful hashtags.</p><button type="button" data-tool-open="hashtags">Open</button></div><div id="hashtags" class="tool-panel"></div></div><div class="tool-box" data-name="word counter"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Word Counter</h3><p>Count words in text.</p><button type="button" data-tool-open="words">Open</button></div><div id="words" class="tool-panel"></div></div><div class="tool-box" data-name="character counter"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Character Counter</h3><p>Count characters.</p><button type="button" data-tool-open="characters">Open</button></div><div id="characters" class="tool-panel"></div></div><div class="tool-box" data-name="case converter"><div class="tool-icon">Aa</div><div class="tool-info"><h3>Case Converter</h3><p>Convert text case.</p><button type="button" data-tool-open="case">Open</button></div><div id="case" class="tool-panel"></div>
+</div></div></section>
 
-<section class="tool-section" id="utilities">
-<div class="section-heading"><div><span class="section-kicker">03</span><h2>Utilities</h2></div><p>Small tools for everyday tasks.</p></div>
-<div class="tool-grid">
-<div class="tool-box" data-name="date difference"><div class="tool-icon">✦</div><div class="tool-info"><h3>Date Difference</h3><p>Find the difference between dates.</p><button type="button" data-tool-open="date">Open</button></div><div id="date" class="tool-panel"></div></div><div class="tool-box" data-name="time calculator"><div class="tool-icon">✦</div><div class="tool-info"><h3>Time Calculator</h3><p>Calculate time difference.</p><button type="button" data-tool-open="time">Open</button></div><div id="time" class="tool-panel"></div></div><div class="tool-box" data-name="unit converter"><div class="tool-icon">✦</div><div class="tool-info"><h3>Unit Converter</h3><p>Convert common units.</p><button type="button" data-tool-open="unit">Open</button></div><div id="unit" class="tool-panel"></div></div><div class="tool-box" data-name="password generator"><div class="tool-icon">✦</div><div class="tool-info"><h3>Password Generator</h3><p>Generate a random password.</p><button type="button" data-tool-open="password">Open</button></div><div id="password" class="tool-panel"></div></div>
-</div>
-</section>
+<section class="tool-section" id="utilities"><div class="section-heading"><div><span class="section-kicker">03</span><h2>Utilities</h2></div><p>Small tools for everyday tasks.</p></div><div class="tool-grid">
+<div class="tool-box" data-name="date difference"><div class="tool-icon">✦</div><div class="tool-info"><h3>Date Difference</h3><p>Find the difference between dates.</p><button type="button" data-tool-open="date">Open</button></div><div id="date" class="tool-panel"></div></div><div class="tool-box" data-name="time calculator"><div class="tool-icon">✦</div><div class="tool-info"><h3>Time Calculator</h3><p>Calculate time difference.</p><button type="button" data-tool-open="time">Open</button></div><div id="time" class="tool-panel"></div></div><div class="tool-box" data-name="unit converter"><div class="tool-icon">✦</div><div class="tool-info"><h3>Unit Converter</h3><p>Convert common units.</p><button type="button" data-tool-open="unit">Open</button></div><div id="unit" class="tool-panel"></div></div><div class="tool-box" data-name="password generator"><div class="tool-icon">✦</div><div class="tool-info"><h3>Password Generator</h3><p>Generate a random password.</p><button type="button" data-tool-open="password">Open</button></div><div id="password" class="tool-panel"></div>
+</div></div></section>
 
-<section class="tool-section" id="media">
-<div class="section-heading"><div><span class="section-kicker">04</span><h2>Image & QR</h2></div><p>Process common files directly in your browser.</p></div>
-<div class="tool-grid">
+<section class="tool-section" id="media"><div class="section-heading"><div><span class="section-kicker">04</span><h2>Image & QR</h2></div><p>Process common files directly in your browser.</p></div><div class="tool-grid">
 <div class="tool-box wide-tool" data-name="image compressor"><div class="tool-icon">▣</div><div class="tool-info"><h3>Image Compressor</h3><p>Compress JPG, PNG and WebP images.</p><button type="button" data-tool-open="imageCompressor">Open</button></div><div id="imageCompressor" class="tool-panel"></div></div><div class="tool-box wide-tool" data-name="image resizer"><div class="tool-icon">▣</div><div class="tool-info"><h3>Image Resizer</h3><p>Resize images to your required size.</p><button type="button" data-tool-open="imageResizer">Open</button></div><div id="imageResizer" class="tool-panel"></div></div><div class="tool-box wide-tool" data-name="qr code generator"><div class="tool-icon">▣</div><div class="tool-info"><h3>QR Code Generator</h3><p>Create a QR code from text or a URL.</p><button type="button" data-tool-open="qrGenerator">Open</button></div><div id="qrGenerator" class="tool-panel"></div></div>
-</div>
-</section>
+</div></section>
 
-<section class="tool-section" id="pdf">
-<div class="section-heading"><div><span class="section-kicker">05</span><h2>PDF</h2></div><p>Simple browser-based PDF utility.</p></div>
-<div class="tool-grid">
+<section class="tool-section" id="pdf"><div class="section-heading"><div><span class="section-kicker">05</span><h2>PDF</h2></div><p>Simple browser-based PDF utility.</p></div><div class="tool-grid">
 <div class="tool-box wide-tool" data-name="pdf merger"><div class="tool-icon">PDF</div><div class="tool-info"><h3>PDF Merger</h3><p>Merge multiple PDF files into one PDF.</p><button type="button" data-tool-open="pdfMerger">Open</button></div><div id="pdfMerger" class="tool-panel"></div></div>
-</div>
-</section>
+</div></section>
 
-
-<section class="tool-section" id="new-popular-tools">
-<div class="section-heading"><div><span class="section-kicker">06</span><h2>New Tools</h2></div><p>Practical tools for image, PDF, developer and everyday tasks.</p></div>
-<div class="tool-grid">
+<section class="tool-section" id="new-popular-tools"><div class="section-heading"><div><span class="section-kicker">06</span><h2>New Tools</h2></div><p>Practical tools for image, PDF, developer and everyday tasks.</p></div><div class="tool-grid">
 <div class="tool-box" data-name="image compressor"><div class="tool-icon">IMG</div><div class="tool-info"><h3>Image Compressor</h3><p>Compress JPG, PNG and WebP images.</p><button type="button" data-tool-open="imageCompressor">Open</button><small class="tool-link-note">Opens the main Image Compressor panel.</small></div></div>
 <div class="tool-box" data-name="image resizer"><div class="tool-icon">IMG</div><div class="tool-info"><h3>Image Resizer</h3><p>Resize images to your required size.</p><button type="button" data-tool-open="imageResizer">Open</button><small class="tool-link-note">Opens the main Image Resizer panel.</small></div></div>
 <div class="tool-box" data-name="merge pdf"><div class="tool-icon">PDF</div><div class="tool-info"><h3>Merge PDF</h3><p>Merge multiple PDF files into one.</p><button type="button" data-tool-open="pdfMerger">Open</button><small class="tool-link-note">Opens the main PDF Merger panel.</small></div></div>
@@ -99,12 +85,9 @@
 <div class="tool-box" data-name="passport photo maker"><div class="tool-icon">ID</div><div class="tool-info"><h3>Passport Photo Maker</h3><p>Create a standard 413 × 531 px photo.</p><button type="button" data-tool-open="passportPhoto">Open</button></div><div id="passportPhoto" class="tool-panel"><input type="file" id="passportFile" accept="image/*"><button type="button" onclick="makePassportPhoto()">Create Photo</button><div id="passportResult" class="result">Select a photo first.</div><div class="ai-actions"><button type="button" id="downloadPassportImage" style="display:none">Download Image</button></div></div></div>
 <div class="tool-box" data-name="split pdf pdf splitter"><div class="tool-icon">PDF</div><div class="tool-info"><h3>Split PDF</h3><p>Extract a page or a range of pages.</p><button type="button" data-tool-open="splitPdf">Open</button></div><div id="splitPdf" class="tool-panel"><input type="file" id="splitPdfFile" accept=".pdf,application/pdf"><input type="number" id="splitStart" min="1" value="1" placeholder="Start page"><input type="number" id="splitEnd" min="1" value="1" placeholder="End page"><button onclick="splitPDF()">Extract Pages</button><div id="splitPdfResult" class="result">Select a PDF first.</div></div></div>
 <div class="tool-box" data-name="json formatter validator developer"><div class="tool-icon">{ }</div><div class="tool-info"><h3>JSON Formatter</h3><p>Format and validate JSON instantly.</p><button type="button" data-tool-open="jsonFormatter">Open</button></div><div id="jsonFormatter" class="tool-panel"><textarea id="jsonInput" rows="6" placeholder="{&quot;name&quot;:&quot;SandyTools&quot;}"></textarea><button onclick="formatJSON()">Format JSON</button><div id="jsonResult" class="result">Paste JSON first.</div></div></div>
-</div>
-</section>
+</div></section>
 
-<section class="tool-section" id="ai-tools">
-<div class="section-heading"><div><span class="section-kicker">07</span><h2>AI Tools</h2></div><p>AI-ready tools that create useful prompts and content workflows.</p></div>
-<div class="tool-grid">
+<section class="tool-section" id="ai-tools"><div class="section-heading"><div><span class="section-kicker">07</span><h2>AI Tools</h2></div><p>AI-ready tools that create useful prompts and content workflows.</p></div><div class="tool-grid">
 <div class="tool-box" data-name="ai prompt generator prompt builder"><div class="tool-icon">AI</div><div class="tool-info"><h3>AI Prompt Builder</h3><p>Create a structured prompt for any AI task.</p><button type="button" data-tool-open="aiPrompt">Open</button></div><div id="aiPrompt" class="tool-panel"></div></div>
 <div class="tool-box" data-name="ai content ideas generator"><div class="tool-icon">AI</div><div class="tool-info"><h3>AI Content Ideas</h3><p>Generate a ready-to-use content ideation prompt.</p><button type="button" data-tool-open="aiIdeas">Open</button></div><div id="aiIdeas" class="tool-panel"></div></div>
 <div class="tool-box" data-name="ai youtube script prompt generator"><div class="tool-icon">AI</div><div class="tool-info"><h3>AI YouTube Script Prompt</h3><p>Build a detailed prompt for video scripts.</p><button type="button" data-tool-open="aiScript">Open</button></div><div id="aiScript" class="tool-panel"></div></div>
@@ -115,60 +98,50 @@
 <div class="tool-box" data-name="ai youtube thumbnail prompt generator"><div class="tool-icon">AI</div><div class="tool-info"><h3>AI YouTube Thumbnail Prompt</h3><p>Create attention-grabbing thumbnail prompts.</p><button type="button" data-tool-open="aiThumb">Open</button></div><div id="aiThumb" class="tool-panel"></div></div>
 <div class="tool-box" data-name="ai product description generator"><div class="tool-icon">AI</div><div class="tool-info"><h3>AI Product Description</h3><p>Create clear product descriptions.</p><button type="button" data-tool-open="aiProduct">Open</button></div><div id="aiProduct" class="tool-panel"></div></div>
 <div class="tool-box" data-name="ai hashtag keyword generator"><div class="tool-icon">AI</div><div class="tool-info"><h3>AI Hashtag & Keyword Generator</h3><p>Build prompts for keywords and hashtags.</p><button type="button" data-tool-open="aiKeyword">Open</button></div><div id="aiKeyword" class="tool-panel"></div></div>
-</div>
-</section>
+</div></section>
 
-<section class="compact-info">
-<div><strong>Free to use</strong><span>No separate software required.</span></div>
-<div><strong>Browser based</strong><span>Many tools process data locally.</span></div>
-<div><strong>Mobile friendly</strong><span>Designed for phones and desktops.</span></div>
-</section>
-
-<details class="seo-details">
-<summary>About SandyTools</summary>
-<p>SandyTools brings practical calculators, text utilities, image processing, QR generation, PDF merging and creator tools together in one simple interface.</p>
-<h3>Are SandyTools tools free?</h3><p>Yes. SandyTools is designed to provide these online utilities without requiring paid software.</p>
-<h3>Can I use SandyTools on mobile?</h3><p>Yes. The interface is responsive and designed for modern phones and desktop browsers.</p>
-<h3>Should I verify calculator results?</h3><p>For important financial or business decisions, treat calculator results as estimates and verify them with the relevant official or professional source.</p>
-</details>
+<section class="compact-info"><div><strong>Free to use</strong><span>No separate software required.</span></div><div><strong>Browser based</strong><span>Many tools process data locally.</span></div><div><strong>Mobile friendly</strong><span>Designed for phones and desktops.</span></div></section>
+<details class="seo-details"><summary>About SandyTools</summary><p>SandyTools brings practical calculators, text utilities, image processing, QR generation, PDF merging and creator tools together in one simple interface.</p><h3>Are SandyTools tools free?</h3><p>Yes. SandyTools is designed to provide these online utilities without requiring paid software.</p><h3>Can I use SandyTools on mobile?</h3><p>Yes. The interface is responsive and designed for modern phones and desktop browsers.</p><h3>Should I verify calculator results?</h3><p>For important financial or business decisions, treat calculator results as estimates and verify them with the relevant official or professional source.</p></details>
 </main>
-
 <footer><div class="wrap"><strong>SandyTools</strong><p>© 2026 SandyTools · <a href="about.html">About</a> · <a href="contact.html">Contact</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p></div></footer>
 <script src="script.js?v=1.0.6"></script>
 <script>
 (function(){
-  function showTool(id){
-    var panel=document.getElementById(id);
-    if(!panel){return false;}
-    document.querySelectorAll(".tool-panel").forEach(function(p){p.style.display=(p===panel?"block":"none");});
-    var box=panel.closest(".tool-box");
-    if(box) box.classList.add("tool-open");
-    return true;
-  }
-  window.openTool=window.openTool||showTool;
-  window.openExistingTool=function(id){
-    if(showTool(id)){
-      var panel=document.getElementById(id), box=panel&&panel.closest(".tool-box");
-      if(box) box.scrollIntoView({behavior:"smooth",block:"center"});
-    }
-  };
-  function initFallback(){
-    document.querySelectorAll("[data-tool-open]").forEach(function(btn){
-      if(btn.dataset.sandyBound==="1") return;
-      btn.dataset.sandyBound="1";
-      btn.type="button";
-      btn.addEventListener("click",function(){
-        var id=this.getAttribute("data-tool-open");
-        if(!id) return;
-        if(!showTool(id) && typeof window.openTool==="function") window.openTool(id);
-        var panel=document.getElementById(id), box=panel&&panel.closest(".tool-box");
-        if(box) box.scrollIntoView({behavior:"smooth",block:"center"});
-      });
-    });
-    if(typeof window.setupToolPanels==="function") window.setupToolPanels();
-  }
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",initFallback);
-  else initFallback();
+function showTool(id){var panel=document.getElementById(id);if(!panel)return false;document.querySelectorAll(".tool-panel").forEach(function(p){p.style.display=(p===panel?"block":"none");});var box=panel.closest(".tool-box");if(box)box.classList.add("tool-open");return true;}
+window.openTool=window.openTool||showTool;
+window.openExistingTool=function(id){if(showTool(id)){var panel=document.getElementById(id),box=panel&&panel.closest(".tool-box");if(box)box.scrollIntoView({behavior:"smooth",block:"center"});}};
+function initFallback(){document.querySelectorAll("[data-tool-open]").forEach(function(btn){if(btn.dataset.sandyBound==="1")return;btn.dataset.sandyBound="1";btn.type="button";btn.addEventListener("click",function(){var id=this.getAttribute("data-tool-open");if(!id)return;if(!showTool(id)&&typeof window.openTool==="function")window.openTool(id);var panel=document.getElementById(id),box=panel&&panel.closest(".tool-box");if(box)box.scrollIntoView({behavior:"smooth",block:"center"});});});if(typeof window.setupToolPanels==="function")window.setupToolPanels();}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initFallback);else initFallback();
+})();
+</script>
+<script>
+(function(){
+const latestUrl="https://github.com/SANDEEP0181/SandyTools/releases/latest";
+const versionEl=document.getElementById("apkVersion");
+const statusEl=document.getElementById("apkStatus");
+const downloadBtn=document.getElementById("apkDownloadButton");
+const shareBtn=document.getElementById("apkShareButton");
+fetch("https://api.github.com/repos/SANDEEP0181/SandyTools/releases/latest")
+.then(r=>r.ok?r.json():Promise.reject())
+.then(data=>{
+  if(versionEl)versionEl.textContent=data.tag_name||data.name||"Latest";
+  if(statusEl)statusEl.textContent="Latest published release: "+(data.name||data.tag_name||"Available");
+  if(downloadBtn)downloadBtn.href=data.html_url||latestUrl;
+})
+.catch(()=>{
+  if(versionEl)versionEl.textContent="Latest published release";
+  if(statusEl)statusEl.textContent="Open the latest GitHub Release to download the current APK.";
+});
+if(shareBtn){
+ shareBtn.addEventListener("click",async function(){
+   const shareData={title:"SandyTools Android App",text:"Download the latest SandyTools APK",url:latestUrl};
+   try{
+     if(navigator.share){await navigator.share(shareData);}
+     else if(navigator.clipboard){await navigator.clipboard.writeText(latestUrl);shareBtn.textContent="Link Copied";setTimeout(()=>shareBtn.textContent="Share App",1800);}
+     else window.open(latestUrl,"_blank");
+   }catch(e){}
+ });
+}
 })();
 </script>
 </body>
