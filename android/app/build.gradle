@@ -2,6 +2,12 @@ plugins {
     id 'com.android.application'
 }
 
+def releaseKeystore = System.getenv("SANDYTOOLS_KEYSTORE_FILE")
+def releaseStorePassword = System.getenv("SANDYTOOLS_KEYSTORE_PASSWORD")
+def releaseKeyAlias = System.getenv("SANDYTOOLS_KEY_ALIAS")
+def releaseKeyPassword = System.getenv("SANDYTOOLS_KEY_PASSWORD")
+def hasReleaseSigning = releaseKeystore && file(releaseKeystore).exists()
+
 android {
     namespace 'com.sandytools.app'
     compileSdk 35
@@ -14,11 +20,25 @@ android {
         versionName '1.0.4'
     }
 
+    signingConfigs {
+        release {
+            if (hasReleaseSigning) {
+                storeFile file(releaseKeystore)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 
