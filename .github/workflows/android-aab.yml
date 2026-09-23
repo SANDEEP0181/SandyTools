@@ -1,0 +1,61 @@
+name: Build SandyTools Release AAB
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'android/app/build.gradle'
+      - '.github/workflows/android-aab.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: android
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Prepare upload keystore
+        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          echo "$KEYSTORE_B64" | base64 --decode > "$RUNNER_TEMP/sandytools-upload.jks"
+          test -s "$RUNNER_TEMP/sandytools-upload.jks"
+
+      - name: Build signed release AAB
+        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        env:
+          SANDYTOOLS_KEYSTORE_FILE: ${{ runner.temp }}/sandytools-upload.jks
+          SANDYTOOLS_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          SANDYTOOLS_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          SANDYTOOLS_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: gradle bundleRelease --no-daemon
+
+      - name: Build unsigned release AAB for validation
+        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 == '' }}
+        run: gradle bundleRelease --no-daemon
+
+      - name: Upload release AAB
+        uses: actions/upload-artifact@v6
+        with:
+          name: SandyTools-release-aab
+          path: android/app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
